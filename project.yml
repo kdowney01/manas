@@ -1,0 +1,49 @@
+name: Manas
+options:
+  bundleIdPrefix: com.manas
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: ""
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    TARGETED_DEVICE_FAMILY: "1"
+
+targets:
+  Manas:
+    type: application
+    platform: iOS
+    sources:
+      - path: Manas
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.manas.app
+        INFOPLIST_FILE: Manas/Resources/Info.plist
+        CODE_SIGN_STYLE: Automatic
+    entitlements:
+      path: Manas/Resources/Manas.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.background-delivery: true
+    dependencies: []
+
+schemes:
+  Manas:
+    build:
+      targets:
+        Manas: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
