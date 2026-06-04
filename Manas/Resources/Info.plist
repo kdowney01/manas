@@ -18,6 +18,11 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -32,6 +37,12 @@
 	<string>Manas reads your heart rate and HRV to monitor your wellbeing and detect early signs of stress.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Manas writes mindfulness session data to help track your mental wellness over time.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Manas uses the front camera for rPPG heart rate measurement and optional facial emotion analysis. No video is recorded or transmitted.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Manas optionally analyzes speech patterns for stress signals. Audio is processed on-device and never stored or transmitted.</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Manas sends gentle wellbeing nudges and critical crisis alerts when your signals shift significantly.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>processing</string>
@@ -40,6 +51,14 @@
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.manas.app.biometric-refresh</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/Montserrat-Regular.ttf</string>
+		<string>Fonts/Montserrat-Medium.ttf</string>
+		<string>Fonts/Montserrat-SemiBold.ttf</string>
+		<string>Fonts/Montserrat-Bold.ttf</string>
+		<string>Fonts/Montserrat-ExtraBold.ttf</string>
 	</array>
 </dict>
 </plist>

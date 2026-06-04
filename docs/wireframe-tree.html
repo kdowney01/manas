@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MANAS — App Architecture & Wireframe Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --indigo:   #5c6cb3;
+  --lavender: #ad6cad;
+  --mint:     #34C759;
+  --peach:    #FF9500;
+  --red:      #FF3B30;
+
+  /* Card base — dark glass */
+  --card-bg:    rgba(255,255,255,0.07);
+  --card-sep:   rgba(255,255,255,0.09);
+
+  /* Card accent tints (darker page-style) */
+  --indigo-l:   rgba(92,108,179,0.18);
+  --indigo-b:   rgba(92,108,179,0.40);
+  --lav-l:      rgba(173,108,173,0.18);
+  --lav-b:      rgba(173,108,173,0.40);
+  --mint-l:     rgba(52,199,89,0.14);
+  --mint-b:     rgba(52,199,89,0.38);
+  --peach-l:    rgba(255,149,0,0.15);
+  --peach-b:    rgba(255,149,0,0.38);
+  --red-l:      rgba(255,59,48,0.15);
+  --red-b:      rgba(255,59,48,0.40);
+  --gray-l:     rgba(255,255,255,0.06);
+  --gray-b:     rgba(255,255,255,0.18);
+
+  /* Text on dark cards */
+  --t1: #FFFFFF;                    /* screen title — pure white */
+  --t2: rgba(255,255,255,0.82);     /* content label — light gray */
+  --t3: rgba(255,255,255,0.52);     /* detail/sub text — medium-light gray */
+  --t4: rgba(255,255,255,0.36);     /* caption, action arrows */
+}
+
+body {
+  background: #0F1228;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--t1);
+  padding: 56px 48px 100px;
+  min-width: 1300px;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%,  rgba(92,108,179,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 5%  85%,  rgba(173,108,173,0.12) 0%, transparent 55%);
+}
+
+.page { position: relative; z-index: 1; }
+
+/* ── Page header ── */
+.header { text-align: center; margin-bottom: 44px; }
+.header img { height: 72px; margin-bottom: 12px; filter: drop-shadow(0 4px 20px rgba(92,108,179,0.45)); }
+.header-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.20em;
+  text-transform: uppercase; color: rgba(255,255,255,0.40);
+}
+
+/* ── Legend ── */
+.legend {
+  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 44px;
+}
+.leg {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: 20px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+}
+.leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.leg-txt { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.65); }
+
+/* ── Section label ── */
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+  margin-bottom: 14px; text-align: center;
+}
+
+/* ══════════════════════════════════
+   SCREEN CARD
+══════════════════════════════════ */
+.screen {
+  background: var(--card-bg);
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,0.14);
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.25);
+  backdrop-filter: blur(12px);
+}
+.screen.modal { border-style: dashed; }
+
+.screen-header {
+  padding: 12px 16px 10px;
+  display: flex; align-items: center; gap: 9px;
+  border-bottom: 1.5px solid var(--card-sep);
+}
+.screen-dot   { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.screen-title { font-size: 14px; font-weight: 700; color: var(--t1); letter-spacing: -0.01em; }
+.screen-tag   {
+  font-size: 11px; font-weight: 700; padding: 3px 9px;
+  border-radius: 6px; margin-left: auto; flex-shrink: 0;
+}
+.modal-badge  {
+  font-size: 11px; font-weight: 700; padding: 3px 9px;
+  border-radius: 6px; margin-left: auto; border-width: 1.5px; border-style: dashed;
+}
+
+.screen-body { padding: 10px 16px 14px; }
+
+/* Content row */
+.ci {
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.ci:last-of-type { border-bottom: none; }
+.ci-icon  { font-size: 14px; flex-shrink: 0; margin-top: 1px; line-height: 1; }
+.ci-label { font-size: 13px; font-weight: 600; color: var(--t2); line-height: 1.4; }
+.ci-sub   { font-size: 12px; font-weight: 400; color: var(--t3); margin-top: 2px; line-height: 1.4; }
+
+/* Actions section */
+.actions {
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1.5px dashed rgba(255,255,255,0.12);
+}
+.actions-hd {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--t4); margin-bottom: 6px;
+}
+.ai {
+  display: flex; align-items: center; gap: 7px;
+  padding: 4px 0;
+  font-size: 12px; font-weight: 500; color: var(--t3);
+}
+.ai-arrow { font-size: 11px; color: var(--t4); flex-shrink: 0; }
+.ai-dest  {
+  font-size: 11px; font-weight: 700; padding: 2px 7px;
+  border-radius: 5px; flex-shrink: 0;
+}
+
+/* ══════════════════════════════════
+   CONNECTORS
+══════════════════════════════════ */
+.conn-h {
+  height: 2px; background: rgba(255,255,255,0.18); border-radius: 1px;
+}
+.conn-v {
+  width: 2px; background: rgba(255,255,255,0.18); border-radius: 1px;
+}
+.conn-label {
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.45);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 8px; padding: 3px 10px; white-space: nowrap;
+}
+.arrow { color: rgba(255,255,255,0.30); font-size: 14px; }
+
+/* ══════════════════════════════════
+   COLOR HELPERS
+══════════════════════════════════ */
+.bg-indigo   { background: var(--indigo-l) !important; border-color: var(--indigo-b) !important; }
+.bg-lavender { background: var(--lav-l)    !important; border-color: var(--lav-b)    !important; }
+.bg-mint     { background: var(--mint-l)   !important; border-color: var(--mint-b)   !important; }
+.bg-peach    { background: var(--peach-l)  !important; border-color: var(--peach-b)  !important; }
+.bg-red      { background: var(--red-l)    !important; border-color: var(--red-b)    !important; }
+.bg-gray     { background: var(--gray-l)   !important; border-color: var(--gray-b)   !important; }
+
+.dot-indigo   { background: var(--indigo);   }
+.dot-lavender { background: var(--lavender); }
+.dot-mint     { background: var(--mint);     }
+.dot-peach    { background: var(--peach);    }
+.dot-red      { background: var(--red);      }
+.dot-gray     { background: #8E8E93;         }
+
+.tag-indigo   { background: var(--indigo-l);          color: #a8b4e8;  border: 1.5px solid var(--indigo-b);   }
+.tag-lavender { background: var(--lav-l);             color: #d4a0d4;  border: 1.5px solid var(--lav-b);     }
+.tag-mint     { background: var(--mint-l);            color: #5de87d;  border: 1.5px solid var(--mint-b);    }
+.tag-peach    { background: var(--peach-l);           color: #ffb84d;  border: 1.5px solid var(--peach-b);   }
+.tag-red      { background: var(--red-l);             color: #ff7a72;  border: 1.5px solid var(--red-b);     }
+.tag-gray     { background: rgba(255,255,255,0.08);   color: rgba(255,255,255,0.65); border: 1.5px solid rgba(255,255,255,0.20); }
+
+.dest-indigo   { background: var(--indigo-l);        color: #a8b4e8; }
+.dest-lavender { background: var(--lav-l);           color: #d4a0d4; }
+.dest-mint     { background: var(--mint-l);          color: #5de87d; }
+.dest-peach    { background: var(--peach-l);         color: #ffb84d; }
+.dest-red      { background: var(--red-l);           color: #ff7a72; }
+.dest-gray     { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); }
+
+/* ── Animation ── */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tree { animation: rise 0.7s 0.1s cubic-bezier(.22,1,.36,1) both; }
+
+/* ── Layout helpers ── */
+.center  { display: flex; justify-content: center; }
+.col     { display: flex; flex-direction: column; align-items: center; }
+.row     { display: flex; align-items: center; }
+.row-top { display: flex; align-items: flex-start; }
+.gap8    { gap: 8px;  }
+.gap12   { gap: 12px; }
+.gap16   { gap: 16px; }
+.gap20   { gap: 20px; }
+.gap24   { gap: 24px; }
+.gap32   { gap: 32px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <img src="../Manas/Resources/Assets/manas_logo.png" alt="manas"/>
+    <div class="header-title">App Architecture &amp; Wireframe Tree · v1.1</div>
+  </header>
+
+  <!-- ── Legend ── -->
+  <div class="legend">
+    <div class="leg"><div class="leg-dot dot-lavender"></div><span class="leg-txt">Onboarding</span></div>
+    <div class="leg"><div class="leg-dot dot-indigo"></div><span class="leg-txt">Dashboard / Today</span></div>
+    <div class="leg"><div class="leg-dot dot-mint"></div><span class="leg-txt">AI Companion</span></div>
+    <div class="leg"><div class="leg-dot dot-gray"></div><span class="leg-txt">Settings</span></div>
+    <div class="leg"><div class="leg-dot dot-red"></div><span class="leg-txt">Crisis &amp; Alerts</span></div>
+    <div class="leg"><div class="leg-dot dot-peach"></div><span class="leg-txt">Sheets / Modals</span></div>
+  </div>
+
+  <div class="tree">
+
+  <!-- ══════════════════════════════════════════════════
+       BLOCK 1 — App Launch
+  ══════════════════════════════════════════════════ -->
+  <div class="center">
+    <div class="screen bg-gray" style="width:260px;">
+      <div class="screen-header">
+        <div class="screen-dot dot-gray"></div>
+        <div class="screen-title">App Launch</div>
+        <div class="screen-tag tag-gray">Entry Point</div>
+      </div>
+      <div class="screen-body">
+        <div class="ci"><div class="ci-icon">🔍</div><div><div class="ci-label">Check onboarding state</div><div class="ci-sub">AppStorage · hasCompletedOnboarding</div></div></div>
+        <div class="ci"><div class="ci-icon">❤️</div><div><div class="ci-label">Check HealthKit auth</div><div class="ci-sub">HealthKitManager.authorizationStatus</div></div></div>
+        <div class="actions">
+          <div class="actions-hd">Routes to</div>
+          <div class="ai"><span class="ai-arrow">→</span> Incomplete or unauthorized <span class="ai-dest dest-lavender">Onboarding Flow</span></div>
+          <div class="ai"><span class="ai-arrow">→</span> Complete + authorized <span class="ai-dest dest-indigo">Main App (Tab Bar)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branch connectors -->
+  <div class="center" style="margin-top:6px;">
+    <div style="display:flex;gap:220px;">
+      <div class="col" style="gap:4px;">
+        <div class="conn-v" style="height:14px;"></div>
+        <div class="conn-label">Not completed</div>
+        <div class="conn-v" style="height:14px;"></div>
+      </div>
+      <div class="col" style="gap:4px;">
+        <div class="conn-v" style="height:14px;"></div>
+        <div class="conn-label">Completed</div>
+        <div class="conn-v" style="height:14px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       BLOCK 2 — Onboarding (left) / Main App label (right)
+  ══════════════════════════════════════════════════ -->
+  <div class="center">
+    <div class="col" style="align-items:flex-start;">
+      <div class="section-label">Onboarding Flow — Linear, one-time</div>
+
+      <!-- 5 onboarding steps in a row -->
+      <div class="row gap8" style="align-items:flex-start;">
+
+        <!-- Step 1: Welcome -->
+        <div class="screen bg-lavender" style="width:210px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-lavender"></div>
+            <div class="screen-title">Welcome</div>
+            <div class="screen-tag tag-lavender">Step 1</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">🖼</div><div><div class="ci-label">Logo + wordmark</div></div></div>
+            <div class="ci"><div class="ci-icon">📝</div><div><div class="ci-label">Value proposition</div><div class="ci-sub">Passive · Private · Always-on</div></div></div>
+            <div class="ci"><div class="ci-icon">🔗</div><div><div class="ci-label">Privacy Policy &amp; Terms link</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Get Started <span class="ai-dest dest-lavender">Step 2</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col" style="gap:4px;margin-top:52px;">
+          <div class="conn-h" style="width:16px;"></div>
+          <div class="conn-label" style="font-size:10px;">Next</div>
+          <div class="conn-h" style="width:16px;"></div>
+        </div>
+
+        <!-- Step 2: Health Access -->
+        <div class="screen bg-lavender" style="width:210px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-lavender"></div>
+            <div class="screen-title">Health Access</div>
+            <div class="screen-tag tag-lavender">Step 2</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">❤️</div><div><div class="ci-label">Heart Rate &amp; HRV</div><div class="ci-sub">Stress detection &amp; baseline</div></div></div>
+            <div class="ci"><div class="ci-icon">🌙</div><div><div class="ci-label">Sleep</div><div class="ci-sub">Recovery patterns</div></div></div>
+            <div class="ci"><div class="ci-icon">🚶</div><div><div class="ci-label">Activity</div><div class="ci-sub">Behavioral change detection</div></div></div>
+            <div class="ci"><div class="ci-icon">🔒</div><div><div class="ci-label">On-device only</div><div class="ci-sub">Raw data never transmitted</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Allow Health Access <span class="ai-dest dest-lavender">Step 3</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col" style="gap:4px;margin-top:52px;">
+          <div class="conn-h" style="width:16px;"></div>
+          <div class="conn-label" style="font-size:10px;">Next</div>
+          <div class="conn-h" style="width:16px;"></div>
+        </div>
+
+        <!-- Step 3: Emergency Contacts -->
+        <div class="screen bg-lavender" style="width:210px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-lavender"></div>
+            <div class="screen-title">Emergency Contacts</div>
+            <div class="screen-tag tag-lavender">Step 3</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">👤</div><div><div class="ci-label">Full name</div></div></div>
+            <div class="ci"><div class="ci-icon">📱</div><div><div class="ci-label">Phone number</div></div></div>
+            <div class="ci"><div class="ci-icon">🔗</div><div><div class="ci-label">Relationship</div><div class="ci-sub">e.g. Parent, Friend</div></div></div>
+            <div class="ci"><div class="ci-icon">🔑</div><div><div class="ci-label">Stored in Keychain</div><div class="ci-sub">Never uploaded to backend</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Save &amp; Continue <span class="ai-dest dest-lavender">Step 4</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> Skip for now <span class="ai-dest dest-lavender">Step 4</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col" style="gap:4px;margin-top:52px;">
+          <div class="conn-h" style="width:16px;"></div>
+          <div class="conn-label" style="font-size:10px;">Next</div>
+          <div class="conn-h" style="width:16px;"></div>
+        </div>
+
+        <!-- Step 4: Notifications -->
+        <div class="screen bg-lavender" style="width:210px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-lavender"></div>
+            <div class="screen-title">Notifications</div>
+            <div class="screen-tag tag-lavender">Step 4</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">🔔</div><div><div class="ci-label">Wellbeing nudges</div><div class="ci-sub">Triggered at High risk</div></div></div>
+            <div class="ci"><div class="ci-icon">🚨</div><div><div class="ci-label">Crisis alerts</div><div class="ci-sub">Triggered at Crisis level</div></div></div>
+            <div class="ci"><div class="ci-icon">🔒</div><div><div class="ci-label">No PHI in alerts</div><div class="ci-sub">HIPAA-safe content only</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Enable Notifications <span class="ai-dest dest-lavender">Step 5</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> Skip <span class="ai-dest dest-lavender">Step 5</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col" style="gap:4px;margin-top:52px;">
+          <div class="conn-h" style="width:16px;"></div>
+          <div class="conn-label" style="font-size:10px;">Next</div>
+          <div class="conn-h" style="width:16px;"></div>
+        </div>
+
+        <!-- Step 5: Calibration -->
+        <div class="screen bg-lavender" style="width:210px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-lavender"></div>
+            <div class="screen-title">Calibration</div>
+            <div class="screen-tag tag-lavender">Step 5</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">📈</div><div><div class="ci-label">7-day step tracker</div><div class="ci-sub">Visual progress dots with connecting line</div></div></div>
+            <div class="ci"><div class="ci-icon">ℹ️</div><div><div class="ci-label">No action needed</div><div class="ci-sub">Risk scoring auto-activates after baseline</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Start Manas <span class="ai-dest dest-indigo">Main App</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /onboarding row -->
+    </div>
+  </div>
+
+  <!-- Connector: Onboarding → Main App -->
+  <div class="center" style="margin-top:10px;">
+    <div class="col" style="gap:4px;">
+      <div class="conn-v" style="height:14px;"></div>
+      <div class="conn-label">Start Manas → hasCompletedOnboarding = true</div>
+      <div class="conn-v" style="height:14px;"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       BLOCK 3 — Tab Bar
+  ══════════════════════════════════════════════════ -->
+  <div class="center">
+    <div class="col">
+      <div class="section-label">Main App — Tab Bar Navigation</div>
+      <div class="screen bg-gray" style="width:380px;">
+        <div class="screen-header">
+          <div class="screen-dot dot-gray"></div>
+          <div class="screen-title">Tab Bar (persistent shell)</div>
+          <div class="screen-tag tag-gray">Root Container</div>
+        </div>
+        <div class="screen-body" style="display:flex;padding:0;">
+          <div style="flex:1;text-align:center;padding:14px 10px;border-right:1px solid rgba(255,255,255,0.09);">
+            <div style="font-size:20px;margin-bottom:5px;">🫀</div>
+            <div style="font-size:13px;font-weight:700;color:#a8b4e8;">Today</div>
+          </div>
+          <div style="flex:1;text-align:center;padding:14px 10px;border-right:1px solid rgba(255,255,255,0.09);">
+            <div style="font-size:20px;margin-bottom:5px;">💬</div>
+            <div style="font-size:13px;font-weight:700;color:#5de87d;">Companion</div>
+          </div>
+          <div style="flex:1;text-align:center;padding:14px 10px;">
+            <div style="font-size:20px;margin-bottom:5px;">⚙️</div>
+            <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.55);">Settings</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branch lines to 3 tabs -->
+  <div class="center" style="margin-top:4px;">
+    <div style="display:flex;width:920px;align-items:flex-end;">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="conn-v" style="height:12px;"></div>
+        <div class="conn-h" style="width:100%;"></div>
+        <div class="conn-v" style="height:12px;"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="conn-v" style="height:12px;"></div>
+        <div class="conn-v" style="height:12px;"></div>
+        <div class="conn-v" style="height:12px;"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="conn-v" style="height:12px;"></div>
+        <div class="conn-h" style="width:100%;"></div>
+        <div class="conn-v" style="height:12px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       BLOCK 4 — Three Tab Screens
+  ══════════════════════════════════════════════════ -->
+  <div class="center">
+    <div class="row-top gap20">
+
+      <!-- TODAY TAB -->
+      <div class="screen bg-indigo" style="width:290px;">
+        <div class="screen-header">
+          <div class="screen-dot dot-indigo"></div>
+          <div class="screen-title">Today (Dashboard)</div>
+          <div class="screen-tag tag-indigo">Tab 1</div>
+        </div>
+        <div class="screen-body">
+          <div class="ci"><div class="ci-icon">👋</div><div><div class="ci-label">Greeting header</div><div class="ci-sub">Good morning, [Name] · Date &amp; time</div></div></div>
+          <div class="ci"><div class="ci-icon">⭕</div><div><div class="ci-label">Wellbeing Score Ring</div><div class="ci-sub">0–100 arc · Risk level badge · Status summary line</div></div></div>
+          <div class="ci"><div class="ci-icon">📊</div><div><div class="ci-label">Biometric Grid (2×2)</div><div class="ci-sub">Heart Rate · HRV · Sleep · Steps + trend arrows</div></div></div>
+          <div class="ci"><div class="ci-icon">💡</div><div><div class="ci-label">Daily Insight Card</div><div class="ci-sub">AI-generated observation from current signals</div></div></div>
+          <div class="ci"><div class="ci-icon">🔔</div><div><div class="ci-label">Recent Alerts</div><div class="ci-sub">Last 5 risk events · severity · trigger signals</div></div></div>
+          <div class="actions">
+            <div class="actions-hd">Actions</div>
+            <div class="ai"><span class="ai-arrow">↺</span> Refresh button <span class="ai-dest dest-indigo">Re-fetch HealthKit</span></div>
+            <div class="ai"><span class="ai-arrow">→</span> Tap Daily Insight <span class="ai-dest dest-mint">Companion Tab</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPANION TAB -->
+      <div class="screen bg-mint" style="width:290px;">
+        <div class="screen-header">
+          <div class="screen-dot dot-mint"></div>
+          <div class="screen-title">Companion</div>
+          <div class="screen-tag tag-mint">Tab 2</div>
+        </div>
+        <div class="screen-body">
+          <div class="ci"><div class="ci-icon">👤</div><div><div class="ci-label">Active persona name</div><div class="ci-sub">Displayed in nav bar title</div></div></div>
+          <div class="ci"><div class="ci-icon">🔄</div><div><div class="ci-label">Persona bar</div><div class="ci-sub">6 doctors · horizontal scroll · tap to switch</div></div></div>
+          <div class="ci"><div class="ci-icon">💬</div><div><div class="ci-label">Chat message thread</div><div class="ci-sub">User right · AI left · typing indicator</div></div></div>
+          <div class="ci"><div class="ci-icon">⌨️</div><div><div class="ci-label">Text input bar</div><div class="ci-sub">Multi-line · send button</div></div></div>
+          <div class="actions">
+            <div class="actions-hd">Actions</div>
+            <div class="ai"><span class="ai-arrow">→</span> Send message <span class="ai-dest dest-mint">AI / fallback response</span></div>
+            <div class="ai"><span class="ai-arrow">→</span> Switch persona button <span class="ai-dest dest-peach">Persona Picker Sheet</span></div>
+            <div class="ai"><span class="ai-arrow">→</span> New button <span class="ai-dest dest-mint">Clear &amp; restart session</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div class="screen bg-gray" style="width:290px;">
+        <div class="screen-header">
+          <div class="screen-dot dot-gray"></div>
+          <div class="screen-title">Settings</div>
+          <div class="screen-tag tag-gray">Tab 3</div>
+        </div>
+        <div class="screen-body">
+          <div class="ci"><div class="ci-icon">🚨</div><div><div class="ci-label">Emergency Contacts</div><div class="ci-sub">List · swipe to delete · Keychain-backed</div></div></div>
+          <div class="ci"><div class="ci-icon">🔔</div><div><div class="ci-label">Notifications</div><div class="ci-sub">Status indicator · enable if disabled</div></div></div>
+          <div class="ci"><div class="ci-icon">🔒</div><div><div class="ci-label">Privacy disclosures</div><div class="ci-sub">Data handling · HIPAA summary (read-only)</div></div></div>
+          <div class="ci"><div class="ci-icon">📤</div><div><div class="ci-label">Export my data</div><div class="ci-sub">JSON — no raw PHI included</div></div></div>
+          <div class="ci"><div class="ci-icon">🗑</div><div><div class="ci-label">Delete all data</div><div class="ci-sub">Wipes Keychain + AppStorage</div></div></div>
+          <div class="ci"><div class="ci-icon">ℹ️</div><div><div class="ci-label">About</div><div class="ci-sub">Version · Privacy Policy · Terms of Service</div></div></div>
+          <div class="actions">
+            <div class="actions-hd">Actions</div>
+            <div class="ai"><span class="ai-arrow">→</span> Add contact <span class="ai-dest dest-peach">Add Contact Sheet</span></div>
+            <div class="ai"><span class="ai-arrow">→</span> Export <span class="ai-dest dest-peach">System Share Sheet</span></div>
+            <div class="ai"><span class="ai-arrow">→</span> Delete all <span class="ai-dest dest-red">Confirmation Dialog</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       BLOCK 5 — Sheets, Modals & Overlays
+  ══════════════════════════════════════════════════ -->
+  <div class="center" style="margin-top:32px;">
+    <div class="col">
+      <div class="section-label">Sheets, Modals &amp; System Overlays</div>
+      <div class="row-top gap16" style="flex-wrap:wrap;justify-content:center;">
+
+        <!-- Crisis View -->
+        <div class="screen bg-red modal" style="width:260px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-red"></div>
+            <div class="screen-title">Crisis View</div>
+            <div class="modal-badge tag-red">fullScreenCover</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">💙</div><div><div class="ci-label">Reassurance header</div><div class="ci-sub">"You're not alone"</div></div></div>
+            <div class="ci"><div class="ci-icon">📞</div><div><div class="ci-label">988 Crisis Lifeline</div><div class="ci-sub">Call button · Text button · Chat link</div></div></div>
+            <div class="ci"><div class="ci-icon">👥</div><div><div class="ci-label">Emergency contacts</div><div class="ci-sub">Text individual · Alert all button</div></div></div>
+            <div class="ci"><div class="ci-icon">💬</div><div><div class="ci-label">Open AI Companion</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Triggered by</div>
+              <div class="ai"><span class="ai-arrow">⬆</span> RiskScoringEngine → .crisis event</div>
+              <div class="ai"><span class="ai-arrow">⬆</span> Crisis notification tap</div>
+              <div class="actions-hd" style="margin-top:8px;">Actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Call/Text 988 <span class="ai-dest dest-red">System dialer / SMS</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> Alert contacts <span class="ai-dest dest-peach">SMS Composer Sheet</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> I'm safe — dismiss <span class="ai-dest dest-gray">Dismiss</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Persona Picker -->
+        <div class="screen bg-peach modal" style="width:260px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-peach"></div>
+            <div class="screen-title">Persona Picker</div>
+            <div class="modal-badge tag-peach">Sheet</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">👨‍⚕️</div><div><div class="ci-label">Dr. Manas — General</div></div></div>
+            <div class="ci"><div class="ci-icon">🧠</div><div><div class="ci-label">Dr. Chen — CBT</div></div></div>
+            <div class="ci"><div class="ci-icon">🌬</div><div><div class="ci-label">Dr. Patel — Anxiety</div></div></div>
+            <div class="ci"><div class="ci-icon">🛡</div><div><div class="ci-label">Dr. Rivera — Trauma</div></div></div>
+            <div class="ci"><div class="ci-icon">🌿</div><div><div class="ci-label">Dr. Kim — Stress</div></div></div>
+            <div class="ci"><div class="ci-icon">☀️</div><div><div class="ci-label">Dr. Osei — Mood</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Select persona <span class="ai-dest dest-mint">New session + dismiss</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> Done button <span class="ai-dest dest-gray">Dismiss</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Contact -->
+        <div class="screen bg-peach modal" style="width:260px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-peach"></div>
+            <div class="screen-title">Add Contact</div>
+            <div class="modal-badge tag-peach">Sheet</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">👤</div><div><div class="ci-label">Full name</div></div></div>
+            <div class="ci"><div class="ci-icon">📱</div><div><div class="ci-label">Phone number</div><div class="ci-sub">keyboardType: .phonePad</div></div></div>
+            <div class="ci"><div class="ci-icon">🔗</div><div><div class="ci-label">Relationship</div></div></div>
+            <div class="ci"><div class="ci-icon">🔔</div><div><div class="ci-label">Notify at High risk?</div><div class="ci-sub">Toggle · always notified at Crisis</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Save <span class="ai-dest dest-gray">Keychain write + dismiss</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> Cancel <span class="ai-dest dest-gray">Dismiss</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Notifications -->
+        <div class="screen bg-red modal" style="width:260px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-red"></div>
+            <div class="screen-title">Risk Notifications</div>
+            <div class="modal-badge tag-red">System Banner</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">🟡</div><div><div class="ci-label">High — wellbeing nudge</div><div class="ci-sub">"Check in with yourself"</div></div></div>
+            <div class="ci"><div class="ci-icon">🔴</div><div><div class="ci-label">Crisis — immediate alert</div><div class="ci-sub">"Immediate support available"</div></div></div>
+            <div class="ci"><div class="ci-icon">🔒</div><div><div class="ci-label">No PHI in content</div><div class="ci-sub">HIPAA-compliant notification body</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Tap actions</div>
+              <div class="ai"><span class="ai-arrow">→</span> Open app <span class="ai-dest dest-indigo">Dashboard</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> Crisis tap <span class="ai-dest dest-red">Crisis View</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       BLOCK 6 — Background Systems
+  ══════════════════════════════════════════════════ -->
+  <div class="center" style="margin-top:32px;">
+    <div class="col">
+      <div class="section-label">Background &amp; Always-On Systems</div>
+      <div class="row-top gap16" style="flex-wrap:wrap;justify-content:center;">
+
+        <div class="screen bg-indigo" style="width:250px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-indigo"></div>
+            <div class="screen-title">HealthKit Monitor</div>
+            <div class="screen-tag tag-indigo">Background</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">❤️</div><div><div class="ci-label">Heart Rate &amp; HRV</div><div class="ci-sub">Hourly background delivery</div></div></div>
+            <div class="ci"><div class="ci-icon">🌙</div><div><div class="ci-label">Sleep analysis</div></div></div>
+            <div class="ci"><div class="ci-icon">🚶</div><div><div class="ci-label">Steps &amp; active energy</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Outputs to</div>
+              <div class="ai"><span class="ai-arrow">→</span> BiometricSnapshot <span class="ai-dest dest-indigo">Risk Engine</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen bg-lavender" style="width:250px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-lavender"></div>
+            <div class="screen-title">Facial Emotion Analyzer</div>
+            <div class="screen-tag tag-lavender">Foreground only</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">📸</div><div><div class="ci-label">Front camera — 30fps</div><div class="ci-sub">No video stored or transmitted</div></div></div>
+            <div class="ci"><div class="ci-icon">👁</div><div><div class="ci-label">Vision face landmarks</div><div class="ci-sub">VNFaceLandmarks2D</div></div></div>
+            <div class="ci"><div class="ci-icon">🧠</div><div><div class="ci-label">CoreML + FACS rules</div><div class="ci-sub">7-class emotion vector</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Outputs to</div>
+              <div class="ai"><span class="ai-arrow">→</span> EmotionVector <span class="ai-dest dest-indigo">BiometricSnapshot</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen bg-indigo" style="width:250px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-indigo"></div>
+            <div class="screen-title">Risk Scoring Engine</div>
+            <div class="screen-tag tag-indigo">Always-on</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">⚖️</div><div><div class="ci-label">Weighted signal fusion</div><div class="ci-sub">HRV 40% · HR 30% · Sleep 20% · Activity 10%</div></div></div>
+            <div class="ci"><div class="ci-icon">📐</div><div><div class="ci-label">Personal baseline</div><div class="ci-sub">Activates after 7-day calibration</div></div></div>
+            <div class="ci"><div class="ci-icon">🔢</div><div><div class="ci-label">Risk score 0–100</div><div class="ci-sub">Low · Moderate · High · Crisis</div></div></div>
+            <div class="actions">
+              <div class="actions-hd">Outputs to</div>
+              <div class="ai"><span class="ai-arrow">→</span> .high <span class="ai-dest dest-red">AlertManager nudge</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> .crisis <span class="ai-dest dest-red">Crisis View + notification</span></div>
+              <div class="ai"><span class="ai-arrow">→</span> Backend <span class="ai-dest dest-mint">Risk event POST</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen bg-mint" style="width:250px;">
+          <div class="screen-header">
+            <div class="screen-dot dot-mint"></div>
+            <div class="screen-title">Backend Service</div>
+            <div class="screen-tag tag-mint">When connected</div>
+          </div>
+          <div class="screen-body">
+            <div class="ci"><div class="ci-icon">🔑</div><div><div class="ci-label">JWT authentication</div><div class="ci-sub">POST /api/auth/login</div></div></div>
+            <div class="ci"><div class="ci-icon">📡</div><div><div class="ci-label">Telemetry stream</div><div class="ci-sub">Socket.IO emit telemetry_update</div></div></div>
+            <div class="ci"><div class="ci-icon">💬</div><div><div class="ci-label">LLM chat</div><div class="ci-sub">POST /api/llm/chat</div></div></div>
+            <div class="ci"><div class="ci-icon">⚠️</div><div><div class="ci-label">Risk event reporting</div><div class="ci-sub">POST /api/risk/event</div></div></div>
+            <div class="ci"><div class="ci-icon">🔐</div><div><div class="ci-label">TLS + cert pinning</div><div class="ci-sub">localhost:8000 (dev)</div></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /tree -->
+</div>
+</body>
+</html>

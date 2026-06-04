@@ -9,9 +9,10 @@ struct BiometricSnapshot: Identifiable, Codable {
     let sleepHours: Double?
     let stepCount: Int?
     let activeEnergyBurned: Double? // kcal
+    var emotionVector: EmotionVector?  // nil if camera unavailable/not consented
 
     var stressIndex: StressIndex {
-        StressIndex.compute(heartRate: heartRate, hrv: hrv)
+        StressIndex.compute(heartRate: heartRate, hrv: hrv, emotion: emotionVector)
     }
 
     init(
@@ -22,7 +23,8 @@ struct BiometricSnapshot: Identifiable, Codable {
         restingHeartRate: Double? = nil,
         sleepHours: Double? = nil,
         stepCount: Int? = nil,
-        activeEnergyBurned: Double? = nil
+        activeEnergyBurned: Double? = nil,
+        emotionVector: EmotionVector? = nil
     ) {
         self.id = id
         self.timestamp = timestamp
@@ -32,6 +34,7 @@ struct BiometricSnapshot: Identifiable, Codable {
         self.sleepHours = sleepHours
         self.stepCount = stepCount
         self.activeEnergyBurned = activeEnergyBurned
+        self.emotionVector = emotionVector
     }
 }
 
@@ -40,11 +43,30 @@ enum StressIndex: String, Codable {
     case elevated
     case high
 
-    // Elevated HR + suppressed HRV = stress (per MAANAS rPPG processor logic)
-    static func compute(heartRate: Double?, hrv: Double?) -> StressIndex {
-        guard let hr = heartRate, let hrv = hrv else { return .calm }
-        if hr > 90 && hrv < 20 { return .high }
-        if hr > 80 && hrv < 35 { return .elevated }
-        return .calm
+    // Multimodal stress computation:
+    // Physiological: elevated HR + suppressed HRV (per MAANAS rPPG processor)
+    // Facial: high emotion stress signal (fearful + angry + disgusted)
+    // Either source alone can elevate the index; both together = definitive.
+    static func compute(heartRate: Double?, hrv: Double?, emotion: EmotionVector? = nil) -> StressIndex {
+        let physioStress: Int = {
+            guard let hr = heartRate, let hrv = hrv else { return 0 }
+            if hr > 90 && hrv < 20 { return 2 }
+            if hr > 80 && hrv < 35 { return 1 }
+            return 0
+        }()
+
+        let emotionStress: Int = {
+            guard let e = emotion else { return 0 }
+            if e.stressSignal > 0.6 { return 2 }
+            if e.stressSignal > 0.35 { return 1 }
+            return 0
+        }()
+
+        let combined = max(physioStress, emotionStress)
+        switch combined {
+        case 2...: return .high
+        case 1:    return .elevated
+        default:   return .calm
+        }
     }
 }

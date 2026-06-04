@@ -24,9 +24,73 @@ Final R&D portfolio presentation submitted for MOT: Strategy & Portfolio Analysi
 ## 2026-05-31 — iOS App development starts
 Kyle Downey initializes `manas` repo on GitHub. iOS app development begins as the P2 mobile-first pilot deliverable. Technical blueprints from Kinshuk Dutta imported as reference.
 
+Foundation built: ManasApp, RootView, OnboardingView (3-step), HealthKitManager (HR/HRV/sleep/steps/background delivery), RiskScoringEngine (weighted scoring, 7-day calibration, RiskEvent generation), BiometricSnapshot, UserProfile, RiskThresholds, RiskEvent/RiskSeverity.
+
+## 2026-06-01 — Design system, branding, and full MVP feature build
+
+### Design system
+- Brand colors applied (Indigo Blue #5c6cb3, Lavender #ad6cad, Soft Mint #a8e6cf, Warm Peach #ffb397, Cool Gray #f4f4f7) per branding guidelines deck
+- Typography system: Montserrat across all weights; UINavigationBarAppearance wired in ManasApp
+- BrandColors.swift + Typography.swift created; Info.plist updated with UIAppFonts
+- App tint set to brand indigo via `.tint(.manasPrimary)` + UINavigationBar appearance
+
+### UI Mockups (docs/ui-mocks.html)
+- v0.1: initial dark-mode 4-screen mockup
+- v0.2: rebuilt with HIG light mode + brand colors + actual Montserrat font
+- v0.3: major redesign incorporating award-winning health app UI patterns (Oura Ring wellness ring, Calm gradient welcome, Bearable insight card, WHOOP metric hierarchy). Actual logo embedded (PNG with transparent background processed via Pillow flood-fill).
+- DashboardView rebuilt: wellness score ring (SVG arc), bento biometric grid with trend arrows, Daily Insight card, greeting header
+
+### Logo
+- `manas_logo_sm.png` uploaded to `Manas/Resources/`
+- White background removed via Python/Pillow flood-fill → `Manas/Resources/Assets/manas_logo.png` (RGBA transparent)
+- SVG approximation also created at `Manas/Resources/Assets/manas-logo.svg`
+
+### MVP features built (2026-06-01 session)
+All features from REQUIREMENTS.md FR-4 through FR-7 implemented:
+
+**Security / HIPAA foundation:**
+- `Core/Security/SecureStorage.swift` — Keychain R/W, AES-256 encryption key, NSFileProtection helper. All sensitive data (JWT, emergency contacts, user profile) stored in Keychain. Raw PHI never stored or logged.
+- OSLog used throughout with `.private` privacy level for any health-adjacent values.
+
+**Notifications & Crisis (FR-4, FR-7):**
+- `Core/Notifications/AlertManager.swift` — UNUserNotificationCenter; gentle nudge at .high, critical alert at .crisis. Notification content contains no raw biometric values (HIPAA).
+- `Features/Crisis/CrisisView.swift` — 988 call + text, emergency contact SMS via MessageUI, AI companion link. Presented as fullScreenCover from RootView on `.crisis` event.
+
+**Emergency contacts (FR-7):**
+- `Core/Models/EmergencyContact.swift` + `EmergencyContactStore` — Keychain-backed CRUD.
+- Emergency contact step added to onboarding (Step 2 of 4).
+
+**Backend integration (FR-5):**
+- `Core/Backend/BackendService.swift` — JWT auth (Keychain), REST + URLSessionWebSocketTask telemetry to MAANAS FastAPI. Certificate pinning stub in place. Only derived scores transmitted (never raw biometrics).
+- Socket.IO note: needs SocketIO-Client-Swift SPM package for full protocol support.
+
+**AI Companion (FR-5):**
+- `Core/AI/CompanionService.swift` — 6 DoctorPersona types (general, CBT, anxiety, trauma, stress, mood). On-device keyword fallback when backend offline. Backend LLM bridge via BackendService.
+- `Features/Companion/CompanionView.swift` — chat UI, horizontal persona picker, typing indicator, persona sheet.
+
+**DeviceActivity (FR-3):**
+- `Core/DeviceActivity/DeviceActivityMonitor.swift` — anomaly detection logic (excessive social media, unusual hours, communication drop) fully implemented. Activation stubbed pending Apple FamilyControls entitlement approval.
+
+**Onboarding (FR-6):**
+- Expanded to 4 steps: Welcome → HealthKit → Emergency Contacts → Notifications → Calibration.
+- ManasButtonStyle shared component extracted.
+
+**App shell:**
+- `RootView.swift` — TabView with Today/Companion/Settings tabs + CrisisView fullScreenCover.
+- `ManasApp.swift` — all ObservableObjects wired; notification categories registered.
+- `Features/Settings/SettingsView.swift` — emergency contacts CRUD, data export (no PHI), delete all data, privacy disclosure section, app version info.
+
+**Info.plist:**
+- NSCameraUsageDescription, NSMicrophoneUsageDescription added.
+- UIAppFonts registered for all 5 Montserrat weights.
+
 ## Open Items / Next Steps
-- [ ] Read branding guidelines and apply to app design
-- [ ] Set up Xcode project structure
-- [ ] Define MVP feature scope for pilot
-- [ ] CoreML model conversion pipeline
-- [ ] HealthKit + DeviceActivity entitlements setup
+- [ ] CoreML model conversion: `emotion_model.onnx` → `EmotionClassifier.mlpackage` (coremltools)
+- [ ] Add Montserrat .ttf files to `Manas/Resources/Fonts/` + Xcode Copy Bundle Resources
+- [ ] Request Apple FamilyControls entitlement for DeviceActivity monitoring
+- [ ] Implement cert pinning (SHA-256 hash) in BackendService before production
+- [ ] Add SocketIO-Client-Swift via Swift Package Manager
+- [ ] Implement FR-2: facial emotion analysis (AVFoundation camera session + VNFaceObservationRequest + CoreML EmotionClassifier)
+- [ ] Verify Manas.entitlements has HealthKit background delivery + add FamilyControls when approved
+- [ ] BAA with MAANAS backend operator before any PHI-adjacent data transmitted
+- [ ] Set MAANAS_API_URL in Xcode scheme environment variables

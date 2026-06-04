@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MANAS — UI Mockups v0.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ─────────────────────────────────
+   TOKENS
+───────────────────────────────── */
+:root {
+  --b-indigo:   #5c6cb3;
+  --b-lavender: #ad6cad;
+  --b-mint:     #a8e6cf;
+  --b-peach:    #ffb397;
+  --b-gray:     #f4f4f7;
+
+  --ios-bg:     #F2F2F7;
+  --ios-card:   #FFFFFF;
+  --ios-l1:     #1C1C1E;
+  --ios-l2:     #636366;
+  --ios-l3:     #AEAEB2;
+  --ios-sep:    #E5E5EA;
+  --ios-fill:   #F2F2F7;
+
+  --risk-low:   #34C759;
+  --risk-mod:   #FFCC00;
+  --risk-high:  #FF9500;
+  --risk-crisis:#FF3B30;
+
+  --pw: 270px;
+  --ph: 586px;
+  --pr: 43px;
+}
+
+body {
+  background: #0F1228;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Ambient light */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -5%,  rgba(92,108,179,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 40% at 8%  85%,  rgba(173,108,173,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 35% at 92% 15%,  rgba(92,108,179,0.10) 0%, transparent 50%);
+}
+
+/* Grain */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.25;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.06'/%3E%3C/svg%3E");
+  background-size: 160px;
+}
+
+.page { position: relative; z-index: 1; padding: 60px 36px 80px; }
+
+/* ─────────────────────────────────
+   PAGE HEADER
+───────────────────────────────── */
+.header {
+  text-align: center; margin-bottom: 60px;
+  animation: rise 0.8s cubic-bezier(.22,1,.36,1) both;
+}
+.header img { height: 88px; margin-bottom: 10px; filter: drop-shadow(0 6px 20px rgba(92,108,179,0.4)); }
+.header-meta {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.28);
+  margin-top: 4px;
+}
+
+/* ─────────────────────────────────
+   PHONES ROW
+───────────────────────────────── */
+.phones {
+  display: flex; gap: 22px;
+  justify-content: center; align-items: flex-start; flex-wrap: wrap;
+}
+
+.phone-col { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.phone-col:nth-child(1) { animation: rise 0.8s 0.06s cubic-bezier(.22,1,.36,1) both; }
+.phone-col:nth-child(2) { animation: rise 0.8s 0.14s cubic-bezier(.22,1,.36,1) both; }
+.phone-col:nth-child(3) { animation: rise 0.8s 0.22s cubic-bezier(.22,1,.36,1) both; }
+.phone-col:nth-child(4) { animation: rise 0.8s 0.30s cubic-bezier(.22,1,.36,1) both; }
+
+.screen-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(255,255,255,0.32);
+}
+
+/* ─────────────────────────────────
+   PHONE SHELL
+───────────────────────────────── */
+.phone {
+  width: var(--pw); height: var(--ph);
+  background: linear-gradient(145deg, #2C2C2E 0%, #1A1A1A 100%);
+  border-radius: var(--pr);
+  position: relative;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.75),
+    inset 0 0 0 1px rgba(255,255,255,0.05),
+    0 32px 72px rgba(0,0,0,0.75),
+    0 6px 18px rgba(0,0,0,0.4);
+}
+.phone::before {
+  content: ''; position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 90px; height: 30px; background: #000; border-radius: 18px; z-index: 100;
+}
+.phone::after {
+  content: ''; position: absolute; right: -3px; top: 122px;
+  width: 3px; height: 66px;
+  background: linear-gradient(180deg,rgba(255,255,255,0.16) 0%,rgba(255,255,255,0.09) 100%);
+  border-radius: 0 2px 2px 0;
+}
+.vol { position: absolute; left: -3px;
+  background: linear-gradient(180deg,rgba(255,255,255,0.16) 0%,rgba(255,255,255,0.09) 100%);
+  border-radius: 2px 0 0 2px; }
+.vol-s { top: 90px;  height: 28px; }
+.vol-u { top: 134px; height: 52px; }
+.vol-d { top: 196px; height: 52px; }
+
+.screen {
+  position: absolute; inset: 0;
+  border-radius: calc(var(--pr) - 1.5px);
+  overflow: hidden; background: white;
+}
+.home-bar {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  width: 118px; height: 5px; background: rgba(0,0,0,0.18); border-radius: 3px; z-index: 50;
+}
+
+/* ─────────────────────────────────
+   STATUS BAR (light mode)
+───────────────────────────────── */
+.sb {
+  position: absolute; top: 0; left: 0; right: 0; height: 50px; z-index: 40;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 20px 8px;
+  font-family: 'Montserrat', sans-serif; font-size: 11.5px; font-weight: 700;
+  color: var(--ios-l1);
+}
+.sb-r { display: flex; align-items: center; gap: 6px; }
+.sb-r svg { display: block; }
+
+/* ─────────────────────────────────
+   SHARED
+───────────────────────────────── */
+.btn {
+  width: 100%; padding: 15px; border-radius: 14px; text-align: center;
+  font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700;
+  letter-spacing: -0.01em; cursor: default;
+}
+.btn-fill { background: var(--b-indigo); color: #fff; }
+.btn-ghost { background: rgba(92,108,179,0.08); color: var(--b-indigo); border: 1.5px solid rgba(92,108,179,0.2); }
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 1 — WELCOME
+   Inspired by: Calm (gradient hero), Headspace (centered logo, generous space)
+═══════════════════════════════════════════════════════════ */
+.s-welcome {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 50px 22px 30px;
+  background:
+    radial-gradient(ellipse 200% 65% at 50% -5%, rgba(92,108,179,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 160% 40% at 50% 110%, rgba(173,108,173,0.07) 0%, transparent 55%),
+    #fff;
+}
+
+.w-top {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0; padding-top: 16px;
+}
+.w-logo { width: 150px; height: auto; }
+.w-rule {
+  width: 28px; height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--b-indigo), transparent);
+  margin: 18px auto; opacity: 0.3;
+}
+.w-tagline {
+  font-size: 13.5px; font-weight: 300; font-style: italic;
+  line-height: 1.7; color: var(--ios-l2); text-align: center; max-width: 196px;
+}
+
+.w-bottom { width: 100%; display: flex; flex-direction: column; gap: 11px; }
+.w-desc { font-size: 11.5px; font-weight: 400; line-height: 1.65; color: var(--ios-l2); text-align: center; }
+.w-subdesc { font-size: 10.5px; font-weight: 500; line-height: 1.55; color: var(--ios-l3); text-align: center; }
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 2 — HEALTH ACCESS
+   Inspired by: Apple Health permission sheets, native HIG pattern
+═══════════════════════════════════════════════════════════ */
+.s-health {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 50px 16px 28px; background: var(--ios-bg);
+}
+.h-top { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 14px; }
+.h-bottom { width: 100%; }
+
+.icon-circle {
+  width: 62px; height: 62px; border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ic-red    { background: rgba(255,59,48,0.10);  border: 1px solid rgba(255,59,48,0.16); }
+.ic-indigo { background: rgba(92,108,179,0.10); border: 1px solid rgba(92,108,179,0.18); }
+
+.scr-title  { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--ios-l1); }
+.scr-sub    { font-size: 12px; font-weight: 400; color: var(--ios-l2); text-align: center; max-width: 200px; line-height: 1.5; }
+
+.perm-list { width: 100%; display: flex; flex-direction: column; gap: 7px; margin-top: 2px; }
+.perm-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; background: var(--ios-card); border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 0 1px rgba(0,0,0,0.04);
+}
+.perm-ico {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(92,108,179,0.10); border: 1px solid rgba(92,108,179,0.18);
+}
+.perm-ico-lav { background: rgba(173,108,173,0.10); border-color: rgba(173,108,173,0.18); }
+.perm-ico-green { background: rgba(52,199,89,0.10); border-color: rgba(52,199,89,0.18); }
+
+.perm-name { font-size: 12px; font-weight: 700; color: var(--ios-l1); letter-spacing: -0.01em; }
+.perm-desc { font-size: 10.5px; font-weight: 400; color: var(--ios-l2); margin-top: 1px; }
+.privacy-note { font-size: 10px; font-weight: 400; color: var(--ios-l3); text-align: center; line-height: 1.55; padding: 0 8px; }
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 3 — CALIBRATION
+   Inspired by: Oura Ring onboarding (step progress), Welltory (data calibration flow)
+═══════════════════════════════════════════════════════════ */
+.s-cal {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 50px 20px 28px; background: var(--ios-bg);
+}
+.c-top { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; padding-top: 14px; text-align: center; }
+.c-desc { font-size: 12.5px; font-weight: 400; line-height: 1.65; color: var(--ios-l2); max-width: 210px; }
+.c-note { font-size: 10.5px; font-weight: 400; color: var(--ios-l3); line-height: 1.55; padding: 0 4px; }
+.c-bottom { width: 100%; }
+
+/* Step-style 7-day tracker */
+.day-track { position: relative; display: flex; gap: 0; align-items: center; }
+.day-item { display: flex; flex-direction: column; align-items: center; gap: 5px; position: relative; z-index: 1; }
+.day-dot {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9.5px; font-weight: 700;
+  background: var(--ios-card); border: 2px solid var(--ios-sep); color: var(--ios-l3);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  transition: all 0.2s;
+}
+.day-dot.done  { background: var(--b-indigo); border-color: var(--b-indigo); color: #fff; }
+.day-dot.today { background: #fff; border-color: var(--b-indigo); color: var(--b-indigo); }
+.day-lbl { font-size: 8px; font-weight: 600; color: var(--ios-l3); letter-spacing: 0.04em; }
+.day-lbl.done  { color: var(--b-indigo); }
+.day-lbl.today { color: var(--b-indigo); }
+/* Connecting line between dots */
+.day-line { flex: 1; height: 2px; background: var(--ios-sep); margin-bottom: 14px; position: relative; z-index: 0; }
+.day-line.done { background: var(--b-indigo); }
+
+.c-prog-wrap { width: 100%; }
+.c-prog-bar {
+  width: 100%; height: 5px; border-radius: 3px;
+  background: var(--ios-sep); overflow: hidden;
+}
+.c-prog-fill { height: 100%; width: 14%; background: var(--b-indigo); border-radius: 3px; }
+.c-prog-label {
+  display: flex; justify-content: space-between;
+  font-size: 9.5px; font-weight: 600; margin-top: 5px;
+  color: var(--ios-l3);
+}
+.c-prog-label span:first-child { color: var(--b-indigo); }
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 4 — DASHBOARD
+   Inspired by: Oura Ring (wellness ring score), Apple Health (summary),
+                WHOOP (bold metric hierarchy), Bearable (insight cards)
+═══════════════════════════════════════════════════════════ */
+.s-dash { position: absolute; inset: 0; display: flex; flex-direction: column; background: var(--ios-bg); }
+
+/* Nav bar */
+.nav {
+  background: var(--ios-card);
+  border-bottom: 1px solid var(--ios-sep);
+  padding: 48px 16px 10px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.nav-mark { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; color: var(--b-indigo); }
+.nav-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--ios-fill); border: 1px solid var(--ios-sep);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Dashboard scroll area */
+.dash-body {
+  flex: 1; overflow: hidden;
+  padding: 10px 12px 20px;
+  display: flex; flex-direction: column; gap: 9px;
+}
+
+/* Greeting */
+.greeting { padding: 2px 2px 0; }
+.greeting-hi { font-size: 11.5px; font-weight: 600; color: var(--ios-l2); }
+.greeting-date { font-size: 10px; font-weight: 400; color: var(--ios-l3); margin-top: 1px; }
+
+/* Wellness ring card — Oura Ring inspired */
+.ring-card {
+  background: var(--ios-card); border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07), 0 0 1px rgba(0,0,0,0.05);
+}
+.ring-eyebrow {
+  font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ios-l2); margin-bottom: 12px;
+}
+.ring-body { display: flex; align-items: center; gap: 16px; }
+.ring-svg-wrap { flex-shrink: 0; }
+.ring-info { flex: 1; }
+.ring-status {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: 20px;
+  background: rgba(52,199,89,0.10); border: 1px solid rgba(52,199,89,0.22);
+  margin-bottom: 8px;
+}
+.ring-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--risk-low); }
+.ring-status-txt { font-size: 10px; font-weight: 700; color: var(--risk-low); }
+.ring-detail { font-size: 10px; font-weight: 400; color: var(--ios-l2); line-height: 1.55; }
+.ring-metric { font-size: 11px; font-weight: 600; color: var(--ios-l2); margin-top: 6px; }
+.ring-metric span { color: var(--ios-l1); }
+
+/* Biometric bento grid */
+.bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.bio-tile {
+  background: var(--ios-card); border-radius: 15px;
+  padding: 13px 13px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.04);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.bio-icon-row { display: flex; align-items: center; justify-content: space-between; }
+.bio-ico {
+  width: 26px; height: 26px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.trend {
+  font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 5px;
+}
+.trend-up   { color: var(--risk-low); background: rgba(52,199,89,0.10); }
+.trend-flat { color: var(--ios-l3);   background: rgba(0,0,0,0.05); }
+.trend-down { color: var(--risk-crisis); background: rgba(255,59,48,0.08); }
+.bio-val  { font-size: 16px; font-weight: 800; letter-spacing: -0.025em; color: var(--ios-l1); line-height: 1; }
+.bio-lbl  { font-size: 9px; font-weight: 600; color: var(--ios-l3); text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* AI Insight card — Bearable / Woebot inspired */
+.insight-card {
+  background: var(--ios-card); border-radius: 14px;
+  border-left: 3px solid var(--b-indigo);
+  padding: 11px 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.insight-header { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+.insight-icon {
+  width: 18px; height: 18px; border-radius: 5px;
+  background: rgba(92,108,179,0.10); display: flex; align-items: center; justify-content: center;
+}
+.insight-label { font-size: 9.5px; font-weight: 700; color: var(--b-indigo); letter-spacing: 0.06em; text-transform: uppercase; }
+.insight-text { font-size: 10.5px; font-weight: 400; color: var(--ios-l2); line-height: 1.55; }
+
+/* Alerts */
+.alerts-hd { font-size: 12px; font-weight: 700; color: var(--ios-l1); margin-bottom: 6px; }
+.alert-row {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 12px; margin-bottom: 5px;
+  background: var(--ios-card); border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.a-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.a-body { flex: 1; }
+.a-sev  { font-size: 11px; font-weight: 700; color: var(--ios-l1); }
+.a-trig { font-size: 9px;  font-weight: 400; color: var(--ios-l2); margin-top: 1px; }
+.a-time { font-size: 9px;  font-weight: 500; color: var(--ios-l3); }
+
+/* ─────────────────────────────────
+   LEGEND
+───────────────────────────────── */
+.legend {
+  display: flex; justify-content: center; gap: 8px;
+  flex-wrap: wrap; margin-top: 52px;
+  animation: rise 0.8s 0.42s cubic-bezier(.22,1,.36,1) both;
+}
+.leg {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 13px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+}
+.leg-dot { width: 9px; height: 9px; border-radius: 50%; }
+.leg-name { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.48); }
+.leg-hex  { font-size: 9px;  font-weight: 400; color: rgba(255,255,255,0.24); }
+
+/* ─────────────────────────────────
+   ANIMATION
+───────────────────────────────── */
+@keyframes rise {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* Influence credits strip */
+.credits {
+  text-align: center; margin-top: 28px;
+  animation: rise 0.8s 0.5s cubic-bezier(.22,1,.36,1) both;
+}
+.credits p {
+  font-size: 9.5px; font-weight: 500; color: rgba(255,255,255,0.2);
+  letter-spacing: 0.06em;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Page header -->
+  <header class="header">
+    <img src="../Manas/Resources/Assets/manas_logo.png" alt="manas"/>
+    <div class="header-meta">UI Mockups v0.3 · HIG + Brand · Montserrat · iOS 17</div>
+  </header>
+
+  <div class="phones">
+
+    <!-- ═══ PHONE 1 — Welcome ═══
+         Style refs: Calm (gradient hero bg), Headspace (centered logo, lots of air) -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="vol vol-s"></div><div class="vol vol-u"></div><div class="vol vol-d"></div>
+        <div class="screen">
+          <div class="sb">
+            <span>9:41</span>
+            <div class="sb-r">
+              <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
+                <rect x="0"  y="9" width="3" height="3" rx=".8" fill="#1C1C1E" opacity=".3"/>
+                <rect x="5"  y="6" width="3" height="6" rx=".8" fill="#1C1C1E" opacity=".55"/>
+                <rect x="10" y="3" width="3" height="9" rx=".8" fill="#1C1C1E" opacity=".8"/>
+                <rect x="14" y="0" width="3" height="12" rx=".8" fill="#1C1C1E"/>
+              </svg>
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                <circle cx="8" cy="11" r="1.5" fill="#1C1C1E"/>
+                <path d="M4.8 7.8Q8 5.5 11.2 7.8" stroke="#1C1C1E" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                <path d="M1.8 5Q8 1.2 14.2 5" stroke="#1C1C1E" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".4"/>
+              </svg>
+              <svg width="26" height="12" viewBox="0 0 26 12" fill="none">
+                <rect x=".6" y="1" width="21" height="10" rx="2.5" stroke="#1C1C1E" stroke-width="1.2" opacity=".65"/>
+                <rect x="22" y="4" width="3.2" height="4" rx="1" fill="#1C1C1E" opacity=".38"/>
+                <rect x="2"  y="2.5" width="16" height="7" rx="1.5" fill="#1C1C1E" opacity=".82"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="s-welcome">
+            <div class="w-top">
+              <img class="w-logo" src="../Manas/Resources/Assets/manas_logo.png" alt="manas logo"/>
+            </div>
+            <div class="w-bottom">
+              <div class="w-desc">Manas passively monitors your wellbeing using health signals already collected by your iPhone — no effort required.</div>
+              <div class="w-subdesc">Private · Always-on · On-device</div>
+              <div class="btn btn-fill">Get Started</div>
+              <div class="btn btn-ghost">Learn how it works</div>
+            </div>
+          </div>
+          <div class="home-bar"></div>
+        </div>
+      </div>
+      <div class="screen-label">Welcome</div>
+    </div>
+
+    <!-- ═══ PHONE 2 — Health Access ═══
+         Style refs: Apple Health permission sheet, native iOS HIG -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="vol vol-s"></div><div class="vol vol-u"></div><div class="vol vol-d"></div>
+        <div class="screen">
+          <div class="sb"><span>9:41</span>
+            <div class="sb-r">
+              <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="9" width="3" height="3" rx=".8" fill="#1C1C1E" opacity=".3"/><rect x="5" y="6" width="3" height="6" rx=".8" fill="#1C1C1E" opacity=".55"/><rect x="10" y="3" width="3" height="9" rx=".8" fill="#1C1C1E" opacity=".8"/><rect x="14" y="0" width="3" height="12" rx=".8" fill="#1C1C1E"/></svg>
+              <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x=".6" y="1" width="21" height="10" rx="2.5" stroke="#1C1C1E" stroke-width="1.2" opacity=".65"/><rect x="22" y="4" width="3.2" height="4" rx="1" fill="#1C1C1E" opacity=".38"/><rect x="2" y="2.5" width="16" height="7" rx="1.5" fill="#1C1C1E" opacity=".82"/></svg>
+            </div>
+          </div>
+
+          <div class="s-health">
+            <div class="h-top">
+              <div class="icon-circle ic-red">
+                <svg width="30" height="27" viewBox="0 0 30 27" fill="none">
+                  <path d="M15 26C15 26 1 17 1 8C1 4.69 4.19 2 8 2C10.3 2 12.35 3.2 13.65 5L15 6.8L16.35 5C17.65 3.2 19.7 2 22 2C25.81 2 29 4.69 29 8C29 17 15 26 15 26Z" fill="#FF3B30" opacity=".82"/>
+                </svg>
+              </div>
+              <div>
+                <div class="scr-title" style="text-align:center">Health Access</div>
+                <div class="scr-sub">Manas reads signals already on your device. Nothing is sent anywhere.</div>
+              </div>
+              <div class="perm-list">
+                <div class="perm-row">
+                  <div class="perm-ico">
+                    <svg width="16" height="14" viewBox="0 0 30 27" fill="none"><path d="M15 26C15 26 1 17 1 8C1 4.69 4.19 2 8 2C10.3 2 12.35 3.2 13.65 5L15 6.8L16.35 5C17.65 3.2 19.7 2 22 2C25.81 2 29 4.69 29 8C29 17 15 26 15 26Z" fill="#5c6cb3" opacity=".85"/></svg>
+                  </div>
+                  <div>
+                    <div class="perm-name">Heart Rate &amp; HRV</div>
+                    <div class="perm-desc">Stress detection &amp; baseline tracking</div>
+                  </div>
+                </div>
+                <div class="perm-row">
+                  <div class="perm-ico perm-ico-lav">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#ad6cad" opacity=".85"/></svg>
+                  </div>
+                  <div>
+                    <div class="perm-name">Sleep</div>
+                    <div class="perm-desc">Rest quality &amp; recovery patterns</div>
+                  </div>
+                </div>
+                <div class="perm-row">
+                  <div class="perm-ico perm-ico-green">
+                    <svg width="12" height="17" viewBox="0 0 20 24" fill="none"><circle cx="10" cy="4" r="3" fill="#34C759" opacity=".85"/><path d="M7 24V16L5 20H3L6.5 11h7L17 20h-2L13 16V24h-2v-5H9v5z" fill="#34C759" opacity=".85"/></svg>
+                  </div>
+                  <div>
+                    <div class="perm-name">Activity</div>
+                    <div class="perm-desc">Behavioral change detection</div>
+                  </div>
+                </div>
+              </div>
+              <div class="privacy-note">All processing happens on-device using Apple's HealthKit.<br>Your raw data never leaves your iPhone.</div>
+            </div>
+            <div class="h-bottom">
+              <div class="btn btn-fill">Allow Health Access</div>
+            </div>
+          </div>
+          <div class="home-bar"></div>
+        </div>
+      </div>
+      <div class="screen-label">Health Access</div>
+    </div>
+
+    <!-- ═══ PHONE 3 — Calibration ═══
+         Style refs: Oura Ring onboarding (step-by-step progress), Welltory calibration flow -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="vol vol-s"></div><div class="vol vol-u"></div><div class="vol vol-d"></div>
+        <div class="screen">
+          <div class="sb"><span>9:41</span>
+            <div class="sb-r">
+              <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="9" width="3" height="3" rx=".8" fill="#1C1C1E" opacity=".3"/><rect x="5" y="6" width="3" height="6" rx=".8" fill="#1C1C1E" opacity=".55"/><rect x="10" y="3" width="3" height="9" rx=".8" fill="#1C1C1E" opacity=".8"/><rect x="14" y="0" width="3" height="12" rx=".8" fill="#1C1C1E"/></svg>
+              <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x=".6" y="1" width="21" height="10" rx="2.5" stroke="#1C1C1E" stroke-width="1.2" opacity=".65"/><rect x="22" y="4" width="3.2" height="4" rx="1" fill="#1C1C1E" opacity=".38"/><rect x="2" y="2.5" width="16" height="7" rx="1.5" fill="#1C1C1E" opacity=".82"/></svg>
+            </div>
+          </div>
+
+          <div class="s-cal">
+            <div class="c-top">
+              <div class="icon-circle ic-indigo">
+                <svg width="26" height="18" viewBox="0 0 26 18" fill="none">
+                  <polyline points="1,9 5,9 7.5,1 11.5,17 14,9 16.5,9 19,4.5 22,13.5 25,9" stroke="#5c6cb3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="scr-title" style="text-align:center">Learning Your Baseline</div>
+                <div class="c-desc">Manas spends 7 days learning what's normal for you — so it can detect meaningful changes, not noise.</div>
+              </div>
+
+              <!-- Step-progress tracker -->
+              <div class="day-track">
+                <div class="day-item">
+                  <div class="day-dot done">✓</div>
+                  <div class="day-lbl done">Mon</div>
+                </div>
+                <div class="day-line done"></div>
+                <div class="day-item">
+                  <div class="day-dot today">2</div>
+                  <div class="day-lbl today">Tue</div>
+                </div>
+                <div class="day-line"></div>
+                <div class="day-item">
+                  <div class="day-dot">3</div>
+                  <div class="day-lbl">Wed</div>
+                </div>
+                <div class="day-line"></div>
+                <div class="day-item">
+                  <div class="day-dot">4</div>
+                  <div class="day-lbl">Thu</div>
+                </div>
+                <div class="day-line"></div>
+                <div class="day-item">
+                  <div class="day-dot">5</div>
+                  <div class="day-lbl">Fri</div>
+                </div>
+                <div class="day-line"></div>
+                <div class="day-item">
+                  <div class="day-dot">6</div>
+                  <div class="day-lbl">Sat</div>
+                </div>
+                <div class="day-line"></div>
+                <div class="day-item">
+                  <div class="day-dot">7</div>
+                  <div class="day-lbl">Sun</div>
+                </div>
+              </div>
+
+              <div class="c-prog-wrap">
+                <div class="c-prog-bar"><div class="c-prog-fill"></div></div>
+                <div class="c-prog-label">
+                  <span>Day 2 of 7</span>
+                  <span>14% complete</span>
+                </div>
+              </div>
+
+              <div class="c-note">Risk scoring activates automatically after your baseline is complete. No action needed from you.</div>
+            </div>
+            <div class="c-bottom">
+              <div class="btn btn-fill">Start Manas</div>
+            </div>
+          </div>
+          <div class="home-bar"></div>
+        </div>
+      </div>
+      <div class="screen-label">Calibration</div>
+    </div>
+
+    <!-- ═══ PHONE 4 — Dashboard ═══
+         Style refs: Oura Ring (wellness ring score + bento metrics),
+                     Apple Health (summary card pattern),
+                     Bearable (AI insight card), WHOOP (bold metric hierarchy) -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="vol vol-s"></div><div class="vol vol-u"></div><div class="vol vol-d"></div>
+        <div class="screen">
+
+          <div class="s-dash">
+            <!-- Nav bar -->
+            <div class="nav">
+              <div class="nav-mark">manas</div>
+              <div class="nav-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 4 23 10 17 10"/>
+                  <path d="M20.49 15a9 9 0 1 1-.02-3.79"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="dash-body">
+
+              <!-- Greeting -->
+              <div class="greeting">
+                <div class="greeting-hi">Good morning, Kyle 👋</div>
+                <div class="greeting-date">Sunday, June 1 · Last updated just now</div>
+              </div>
+
+              <!-- Wellness ring card — Oura Ring "Readiness" inspired -->
+              <div class="ring-card">
+                <div class="ring-eyebrow">Wellbeing Score</div>
+                <div class="ring-body">
+                  <!-- SVG ring: score 82/100, green arc -->
+                  <div class="ring-svg-wrap">
+                    <svg width="96" height="96" viewBox="0 0 96 96">
+                      <!-- Track -->
+                      <circle cx="48" cy="48" r="40" fill="none" stroke="#E5E5EA" stroke-width="7"/>
+                      <!-- Progress arc: circumference=251.3, 82%=206.1 -->
+                      <circle cx="48" cy="48" r="40" fill="none"
+                        stroke="#34C759" stroke-width="7"
+                        stroke-dasharray="206.1 45.2"
+                        stroke-linecap="round"
+                        transform="rotate(-90 48 48)"/>
+                      <!-- Score -->
+                      <text x="48" y="44" text-anchor="middle"
+                        font-family="Montserrat,sans-serif" font-size="22" font-weight="800" fill="#1C1C1E">82</text>
+                      <text x="48" y="57" text-anchor="middle"
+                        font-family="Montserrat,sans-serif" font-size="8" font-weight="600" fill="#AEAEB2" letter-spacing="0.08em">OF 100</text>
+                    </svg>
+                  </div>
+                  <div class="ring-info">
+                    <div class="ring-status">
+                      <div class="ring-status-dot"></div>
+                      <div class="ring-status-txt">Low Risk</div>
+                    </div>
+                    <div class="ring-detail">All signals within your personal baseline range.</div>
+                    <div class="ring-metric">HRV <span>48ms</span> · HR <span>72 BPM</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Biometric bento grid -->
+              <div class="bio-grid">
+                <div class="bio-tile">
+                  <div class="bio-icon-row">
+                    <div class="bio-ico" style="background:rgba(255,59,48,0.09)">
+                      <svg width="13" height="12" viewBox="0 0 28 26" fill="none"><path d="M14 25C1 17 1 7 8 2a7 7 0 0 1 12 0c7 5 7 15-6 23z" fill="#FF3B30" opacity=".78"/></svg>
+                    </div>
+                    <div class="trend trend-flat">→ stable</div>
+                  </div>
+                  <div class="bio-val">72 <span style="font-size:10px;font-weight:600;color:var(--ios-l3)">BPM</span></div>
+                  <div class="bio-lbl">Heart Rate</div>
+                </div>
+                <div class="bio-tile">
+                  <div class="bio-icon-row">
+                    <div class="bio-ico" style="background:rgba(173,108,173,0.09)">
+                      <svg width="16" height="10" viewBox="0 0 26 14" fill="none"><polyline points="1,7 4.5,7 7,1 10,13 12.5,7 15.5,7 18,3.5 21,10.5 24.5,7" stroke="#ad6cad" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".85"/></svg>
+                    </div>
+                    <div class="trend trend-up">↑ +18%</div>
+                  </div>
+                  <div class="bio-val">48 <span style="font-size:10px;font-weight:600;color:var(--ios-l3)">ms</span></div>
+                  <div class="bio-lbl">HRV</div>
+                </div>
+                <div class="bio-tile">
+                  <div class="bio-icon-row">
+                    <div class="bio-ico" style="background:rgba(92,108,179,0.09)">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#5c6cb3" opacity=".78"/></svg>
+                    </div>
+                    <div class="trend trend-up">↑ good</div>
+                  </div>
+                  <div class="bio-val">7.2 <span style="font-size:10px;font-weight:600;color:var(--ios-l3)">hr</span></div>
+                  <div class="bio-lbl">Sleep</div>
+                </div>
+                <div class="bio-tile">
+                  <div class="bio-icon-row">
+                    <div class="bio-ico" style="background:rgba(52,199,89,0.09)">
+                      <svg width="10" height="14" viewBox="0 0 20 24" fill="none"><circle cx="10" cy="4" r="3" fill="#34C759" opacity=".78"/><path d="M7 24V16L5 20H3L6.5 11h7L17 20h-2L13 16V24h-2v-5H9v5z" fill="#34C759" opacity=".78"/></svg>
+                    </div>
+                    <div class="trend trend-flat">→ avg</div>
+                  </div>
+                  <div class="bio-val" style="font-size:14px">6,421</div>
+                  <div class="bio-lbl">Steps</div>
+                </div>
+              </div>
+
+              <!-- AI Insight card — Bearable inspired -->
+              <div class="insight-card">
+                <div class="insight-header">
+                  <div class="insight-icon">
+                    <svg width="10" height="10" viewBox="0 0 20 20" fill="none">
+                      <path d="M10 2a6 6 0 0 1 4 10.47V14H6v-1.53A6 6 0 0 1 10 2z" fill="#5c6cb3" opacity=".8"/>
+                      <rect x="6.5" y="15" width="7" height="1.5" rx=".75" fill="#5c6cb3" opacity=".5"/>
+                      <rect x="7.5" y="17" width="5" height="1.5" rx=".75" fill="#5c6cb3" opacity=".3"/>
+                    </svg>
+                  </div>
+                  <div class="insight-label">Daily Insight</div>
+                </div>
+                <div class="insight-text">Your HRV is 18% above your 7-day average. Combined with consistent sleep, you're in a positive recovery window.</div>
+              </div>
+
+              <!-- Recent alerts -->
+              <div>
+                <div class="alerts-hd">Recent Alerts</div>
+                <div class="alert-row">
+                  <div class="a-dot" style="background:#FFCC00"></div>
+                  <div class="a-body">
+                    <div class="a-sev">Moderate</div>
+                    <div class="a-trig">Low HRV (28ms) · Low sleep (5.1h)</div>
+                  </div>
+                  <div class="a-time">2d ago</div>
+                </div>
+              </div>
+
+            </div><!-- /dash-body -->
+          </div><!-- /s-dash -->
+          <div class="home-bar"></div>
+        </div>
+      </div>
+      <div class="screen-label">Dashboard</div>
+    </div>
+
+  </div><!-- /phones -->
+
+  <!-- Brand legend -->
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#5c6cb3"></div><span class="leg-name">Indigo Blue</span><span class="leg-hex">#5c6cb3</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#ad6cad"></div><span class="leg-name">Lavender</span><span class="leg-hex">#ad6cad</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#a8e6cf"></div><span class="leg-name">Soft Mint</span><span class="leg-hex">#a8e6cf</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#ffb397"></div><span class="leg-name">Warm Peach</span><span class="leg-hex">#ffb397</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#34C759"></div><span class="leg-name">Low Risk</span><span class="leg-hex">system green</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#FFCC00"></div><span class="leg-name">Moderate</span><span class="leg-hex">system yellow</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#FF9500"></div><span class="leg-name">High</span><span class="leg-hex">system orange</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#FF3B30"></div><span class="leg-name">Crisis</span><span class="leg-hex">system red</span></div>
+  </div>
+
+  <div class="credits">
+    <p>Design influences: Oura Ring · Calm · Apple Health · WHOOP · Bearable · Headspace</p>
+  </div>
+
+</div>
+</body>
+</html>
