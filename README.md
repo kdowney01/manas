@@ -1,7 +1,5 @@
 # MANAS
 
-> *"Every mind deserves care, because silence should never be a sentence."*
-
 **MANAS** (Multimodal AI for Awareness, Neurocognitive Analysis & Support) is an
 AI-driven, always-on mental health companion for iOS that proactively detects the
 risk of a mental health crisis **before** it occurs — without requiring the user to
@@ -64,7 +62,21 @@ crisis support (988, emergency contacts, AI companion).
 - **Backend & AI** — JWT-authenticated REST + native WebSocket bridge (derived scores only); 6-persona AI companion with an on-device keyword fallback
 - **Features** — Onboarding, Dashboard, Companion, Crisis, Settings
 
-See `docs/architecture/ARCHITECTURE.md` and `docs/decisions/` (ADRs) for the full design.
+### Documentation
+
+- [Project Overview](docs/PROJECT_OVERVIEW.md) — vision, problem, team, target impact, R&D portfolio
+- [Architecture](docs/architecture/ARCHITECTURE.md) — system design
+- [Requirements](docs/requirements/REQUIREMENTS.md) — functional & non-functional requirements
+- [Project History](docs/history/PROJECT_HISTORY.md) — timeline
+- **Architecture Decision Records**
+  - [ADR-001 — Swift / SwiftUI](docs/decisions/ADR-001-swift-swiftui.md)
+  - [ADR-002 — On-device-first inference](docs/decisions/ADR-002-on-device-first-inference.md)
+  - [ADR-003 — Native WebSocket](docs/decisions/ADR-003-native-websocket.md)
+  - [ADR-004 — DeviceActivity](docs/decisions/ADR-004-device-activity.md)
+- **Compliance**
+  - [BAA Requirements](docs/compliance/BAA_REQUIREMENTS.md)
+  - [FamilyControls Submission](docs/compliance/FAMILY_CONTROLS_SUBMISSION.md)
+- **UI** — [UI mocks](docs/ui-mocks.html) · [wireframe tree](docs/wireframe-tree.html) (open in a browser)
 
 ---
 
@@ -156,13 +168,13 @@ See `docs/compliance/` for BAA requirements and the FamilyControls submission ma
 
 ## Team
 
-| Name | Role |
-|------|------|
-| Daniel Gumucio | Founder & CEO |
-| Sunita Gogineni | VP & Head of IT |
-| Blair Day | SVP Engineering & IT |
-| Kyle Downey | VP, Engineering |
-| Kinshuk Dutta | Director, AI Product Management |
+| Name |
+|------|
+| Daniel Gumucio |
+| Sunita Gogineni |
+| Blair Day |
+| Kyle Downey |
+| Kinshuk Dutta |
 
 ---
 
