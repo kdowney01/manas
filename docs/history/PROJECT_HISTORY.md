@@ -135,10 +135,29 @@ All features from REQUIREMENTS.md FR-4 through FR-7 implemented:
 **Xcode project:**
 - `project.pbxproj` updated: all 24 new Swift sources registered in Compile Sources; Resources build phase added (was missing); 5 fonts + 2 logos added to Copy Bundle Resources; 13 new groups added
 
+## 2026-06-03 (continued) — Remaining open items sprint
+
+### Item 1 — CoreML model conversion ✅
+- `scripts/convert_emotion_model.py` — production ONNX→mlpackage converter for Kinshuk (Python 3.9-3.11 + coremltools)
+- `scripts/make_stub_model.py` — dev stub that returns near-neutral probabilities for end-to-end pipeline testing
+- `scripts/README.md` — model contract, usage, Xcode integration steps
+- `FacialEmotionAnalyzer` already handles absent model gracefully (FACS-only fallback)
+
+### Item 2 — FamilyControls Apple approval ✅
+- `docs/compliance/FAMILY_CONTROLS_SUBMISSION.md` — complete prepared answers for Apple's request form: use case (individual self-monitoring), privacy practices, clinical justification, post-approval code steps
+- `docs/decisions/ADR-004-device-activity.md` — records three anomaly categories, two-process extension architecture, post-approval work required
+- Key architectural note: post-approval requires a separate `DeviceActivityReportExtension` Xcode target + App Group shared container
+
+### Item 3 — Certificate pinning (intermediate CA) ✅
+- Switched from leaf cert pinning to intermediate CA pinning in `BackendService.URLSessionDelegate`
+- Chain walk: checks all certs in chain — pin survives leaf cert rotation (critical for Let's Encrypt 90-day renewals)
+- `scripts/generate_pin_hash.sh` — fetches full chain via `openssl s_client -showcerts`, hashes each cert, labels which hash to use
+- Dev mode: logs clearly when no pins configured; impossible to ship without noticing
+
 ## Open Items / Next Steps
-- [x] CoreML conversion script — written (`scripts/`); Kinshuk runs on machine with Python 3.9-3.11
-- [ ] Run `make_stub_model.py` to generate dev `.mlpackage` for local testing (needs Python 3.9-3.11)
-- [ ] Request Apple FamilyControls entitlement (apple.com/contact/request/family-controls-distribution)
-- [ ] Cert pinning: generate SHA-256 hash of production server cert and add to `ManasDev.plist`
+- [ ] Run `scripts/make_stub_model.py` on Python 3.9-3.11 machine → add `EmotionClassifier.mlpackage` to Xcode target
+- [ ] Kyle submits FamilyControls request to Apple (apple.com/contact/request/family-controls-distribution)
+- [ ] Run `scripts/generate_pin_hash.sh api.maanas.health` once server is live → add hash to `ManasDev.plist`
 - [ ] BAA with MAANAS backend operator before any PHI-adjacent data transmitted in production
 - [ ] Kinshuk: add `@app.websocket("/ws/telemetry")` FastAPI endpoint (see ADR-003)
+- [ ] Post FamilyControls approval: add DeviceActivityReportExtension Xcode target + App Group entitlement

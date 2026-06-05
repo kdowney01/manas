@@ -66,7 +66,7 @@ See `docs/PROJECT_OVERVIEW.md` for full context.
 
 - [x] CoreML conversion scripts written (`scripts/`) — Kinshuk runs on Python 3.9-3.11
 - [x] FamilyControls submission prepared (`docs/compliance/FAMILY_CONTROLS_SUBMISSION.md`) — Kyle submits to Apple
-- [ ] Cert pinning: generate SHA-256 hash of production server cert → `ManasDev.plist` as `MAANAS_PIN_HASH`
+- [x] Cert pinning: intermediate CA pinning implemented; `scripts/generate_pin_hash.sh` generates hash when server is live
 - [ ] BAA with MAANAS backend operator before any PHI-adjacent data transmitted in production
 - [ ] Kinshuk: add `@app.websocket("/ws/telemetry")` to FastAPI (see ADR-003)
 - [ ] Post FamilyControls approval: add DeviceActivityReportExtension Xcode target + App Group entitlement
