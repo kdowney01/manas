@@ -34,6 +34,20 @@ const state = {
   persona: 'general',
   messages: [],
 
+  // Digital wellbeing signals (behavioral)
+  digital: {
+    enabled: false,
+    social: true,
+    messages: true,
+    email: true,
+    screentime: true,
+    // derived demo values (no raw content — HIPAA)
+    screenTimeHrs: 5.4,
+    socialMin: 142,
+    msgTone: 'Positive',
+    emailTone: 'Neutral',
+  },
+
   // Settings
   notificationsEnabled: false,
   calibrationDay: 2,
@@ -51,6 +65,7 @@ function saveState() {
       persona: state.persona,
       riskLevel: state.riskLevel,
       notificationsEnabled: state.notificationsEnabled,
+      digital: state.digital,
     }));
   } catch(e) {}
 }
@@ -162,7 +177,7 @@ function navigate(screenId, opts = {}) {
   el.classList.add('screen-animate');
 
   const isMain = ['dashboard','companion','settings'].includes(screenId);
-  const isOnboard = ['welcome','health-access','emergency-contacts','notifications','calibration'].includes(screenId);
+  const isOnboard = ['welcome','health-access','digital-signals','emergency-contacts','notifications','calibration'].includes(screenId);
 
   // Nav bar
   const nb = navBarEl();
@@ -231,7 +246,7 @@ const SCREENS = {
       </div>
       <div class="onboard-bottom">
         <div style="display:flex;justify-content:center;margin-bottom:12px;">
-          ${[0,1,2,3,4].map(i=>`<div class="step-dot${i===0?' active':''}" style="margin:0 3px"></div>`).join('')}
+          ${[0,1,2,3,4,5].map(i=>`<div class="step-dot${i===0?' active':''}" style="margin:0 3px"></div>`).join('')}
         </div>
         <button class="btn btn-primary" data-goto="health-access">Get Started</button>
         <button class="btn btn-ghost" onclick="App.showLearnMore()">Learn how it works</button>
@@ -263,9 +278,33 @@ const SCREENS = {
       </div>
       <div class="onboard-bottom">
         <div style="display:flex;justify-content:center;margin-bottom:12px;">
-          ${[0,1,2,3,4].map(i=>`<div class="step-dot${i===1?' active':''}" style="margin:0 3px"></div>`).join('')}
+          ${[0,1,2,3,4,5].map(i=>`<div class="step-dot${i===1?' active':''}" style="margin:0 3px"></div>`).join('')}
         </div>
-        <button class="btn btn-primary" data-goto="emergency-contacts">Allow Health Access</button>
+        <button class="btn btn-primary" data-goto="digital-signals">Allow Health Access</button>
+      </div>
+    </div>`,
+
+  /* ── Digital Wellbeing ── */
+  'digital-signals': () => `
+    <div class="onboard-screen">
+      <div class="onboard-top">
+        <div class="onboard-icon" style="background:rgba(173,108,173,0.12)">📲</div>
+        <div class="onboard-title">Digital Wellbeing</div>
+        <div class="onboard-sub">Your phone habits reveal early shifts in mood and energy. Manas reads the <em>patterns</em> — never the content.</div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          ${digitalSignalRow('ds-social','📲','var(--indigo-l)','Social Media','Engagement &amp; usage patterns', state.digital.social)}
+          ${digitalSignalRow('ds-messages','💬','var(--lav-l)','Message Tone','Sentiment from texts — on-device only', state.digital.messages)}
+          ${digitalSignalRow('ds-email','✉️','rgba(255,179,151,0.18)','Email Tone','Sentiment from email — on-device only', state.digital.email)}
+          ${digitalSignalRow('ds-screentime','⏱️','rgba(168,230,207,0.30)','Screen Time','Daily totals &amp; late-night use', state.digital.screentime)}
+        </div>
+        <div class="onboard-caption">Only derived scores (tone, frequency, duration) are computed — on-device. Raw messages, emails, and content are never stored or transmitted. HIPAA-safe.</div>
+      </div>
+      <div class="onboard-bottom">
+        <div style="display:flex;justify-content:center;margin-bottom:12px;">
+          ${[0,1,2,3,4,5].map(i=>`<div class="step-dot${i===2?' active':''}" style="margin:0 3px"></div>`).join('')}
+        </div>
+        <button class="btn btn-primary" id="ds-continue-btn">Enable &amp; Continue</button>
+        <button class="btn btn-ghost" data-goto="emergency-contacts">Skip for now</button>
       </div>
     </div>`,
 
@@ -285,7 +324,7 @@ const SCREENS = {
       </div>
       <div class="onboard-bottom">
         <div style="display:flex;justify-content:center;margin-bottom:12px;">
-          ${[0,1,2,3,4].map(i=>`<div class="step-dot${i===2?' active':''}" style="margin:0 3px"></div>`).join('')}
+          ${[0,1,2,3,4,5].map(i=>`<div class="step-dot${i===3?' active':''}" style="margin:0 3px"></div>`).join('')}
         </div>
         <button class="btn btn-primary" id="ec-save-btn">Save &amp; Continue</button>
         <button class="btn btn-ghost" data-goto="notifications">Skip for now</button>
@@ -313,7 +352,7 @@ const SCREENS = {
       </div>
       <div class="onboard-bottom">
         <div style="display:flex;justify-content:center;margin-bottom:12px;">
-          ${[0,1,2,3,4].map(i=>`<div class="step-dot${i===3?' active':''}" style="margin:0 3px"></div>`).join('')}
+          ${[0,1,2,3,4,5].map(i=>`<div class="step-dot${i===4?' active':''}" style="margin:0 3px"></div>`).join('')}
         </div>
         <button class="btn btn-primary" id="notif-enable-btn">Enable Notifications</button>
         <button class="btn btn-ghost" data-goto="calibration">Skip for now</button>
@@ -343,7 +382,7 @@ const SCREENS = {
       </div>
       <div class="onboard-bottom">
         <div style="display:flex;justify-content:center;margin-bottom:12px;">
-          ${[0,1,2,3,4].map(i=>`<div class="step-dot${i===4?' active':''}" style="margin:0 3px"></div>`).join('')}
+          ${[0,1,2,3,4,5].map(i=>`<div class="step-dot${i===5?' active':''}" style="margin:0 3px"></div>`).join('')}
         </div>
         <button class="btn btn-primary" id="start-btn">Start Manas</button>
       </div>
@@ -394,6 +433,9 @@ const SCREENS = {
         ${metricTile('🌙','rgba(92,108,179,0.09)', state.bio.sleep + 'h', 'Sleep', '↑ good', 'up')}
         ${metricTile('🚶','rgba(52,199,89,0.09)', state.bio.steps.toLocaleString(), 'Steps', '→ avg', 'flat')}
       </div>
+
+      <!-- Digital wellbeing -->
+      ${digitalSection()}
 
       <!-- Insight card -->
       <div class="insight-card" id="insight-tap">
@@ -482,6 +524,23 @@ const SCREENS = {
           <div class="list-row-content"><div class="list-row-label">Wellbeing nudges &amp; alerts</div></div>
           <label class="toggle">
             <input type="checkbox" id="notif-toggle" ${state.notificationsEnabled ? 'checked' : ''}>
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Digital signals -->
+      <div class="section-hd">Digital Signals</div>
+      <div class="list-section" style="margin:0 16px;">
+        <div class="list-row">
+          <div class="list-row-icon">📲</div>
+          <div class="list-row-content">
+            <div class="list-row-label">Behavioral signals</div>
+            <div class="list-row-detail">Social, messages, email tone, screen time</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="digital-toggle" ${state.digital.enabled ? 'checked' : ''}>
             <div class="toggle-track"></div>
             <div class="toggle-thumb"></div>
           </label>
@@ -579,6 +638,51 @@ function metricTile(icon, iconBg, val, label, trend, trendType) {
   </div>`;
 }
 
+function digitalSignalRow(id, icon, iconBg, name, desc, checked) {
+  return `<div class="perm-row">
+    <div class="perm-icon" style="background:${iconBg}">${icon}</div>
+    <div style="flex:1">
+      <div class="perm-name">${name}</div>
+      <div class="perm-desc">${desc}</div>
+    </div>
+    <label class="toggle">
+      <input type="checkbox" id="${id}" ${checked ? 'checked' : ''}>
+      <div class="toggle-track"></div>
+      <div class="toggle-thumb"></div>
+    </label>
+  </div>`;
+}
+
+function digitalSection() {
+  const d = state.digital;
+  if (!d.enabled) {
+    return `
+      <div>
+        <div class="alerts-hd">Digital Wellbeing</div>
+        <div class="digital-prompt" id="digital-enable-prompt">
+          <div class="digital-prompt-icon">📲</div>
+          <div style="flex:1">
+            <div class="digital-prompt-title">Add digital signals</div>
+            <div class="digital-prompt-sub">Screen time, social, and message tone sharpen your wellbeing score.</div>
+          </div>
+          <div style="color:var(--indigo);font-weight:700;font-size:22px;line-height:1;">+</div>
+        </div>
+      </div>`;
+  }
+  const tiles = [];
+  if (d.screentime) tiles.push(metricTile('⏱️','rgba(92,108,179,0.09)', d.screenTimeHrs + 'h', 'Screen Time', '→ typical', 'flat'));
+  if (d.social)     tiles.push(metricTile('📲','rgba(173,108,173,0.09)', d.socialMin + 'm', 'Social Media', '→ stable', 'flat'));
+  if (d.messages)   tiles.push(metricTile('💬','rgba(52,199,89,0.09)', d.msgTone, 'Message Tone', '↑ warmer', 'up'));
+  if (d.email)      tiles.push(metricTile('✉️','rgba(255,179,151,0.18)', d.emailTone, 'Email Tone', '→ steady', 'flat'));
+  if (tiles.length === 0) return '';
+  return `
+    <div>
+      <div class="alerts-hd">Digital Wellbeing</div>
+      <div class="bio-grid">${tiles.join('')}</div>
+      <div class="digital-note">📲 Tone is computed on-device from language patterns. Raw message &amp; email content is never stored or sent.</div>
+    </div>`;
+}
+
 function renderMsg(role, icon, text) {
   return `<div class="msg ${role}">
     ${role === 'ai' ? `<div class="msg-avatar">${icon}</div>` : ''}
@@ -600,6 +704,18 @@ function bindScreenEvents(screenId) {
   });
 
   switch (screenId) {
+
+    case 'digital-signals':
+      document.getElementById('ds-continue-btn')?.addEventListener('click', () => {
+        state.digital.social     = document.getElementById('ds-social').checked;
+        state.digital.messages   = document.getElementById('ds-messages').checked;
+        state.digital.email      = document.getElementById('ds-email').checked;
+        state.digital.screentime = document.getElementById('ds-screentime').checked;
+        state.digital.enabled    = true;
+        saveState();
+        navigate('emergency-contacts');
+      });
+      break;
 
     case 'emergency-contacts':
       document.getElementById('ec-save-btn')?.addEventListener('click', () => {
@@ -631,6 +747,7 @@ function bindScreenEvents(screenId) {
     case 'dashboard':
       document.getElementById('refresh-btn')?.addEventListener('click', refreshBiometrics);
       document.getElementById('insight-tap')?.addEventListener('click', () => switchTab('companion'));
+      document.getElementById('digital-enable-prompt')?.addEventListener('click', showDigitalSheet);
       break;
 
     case 'companion':
@@ -671,6 +788,15 @@ function bindScreenEvents(screenId) {
         state.notificationsEnabled = e.target.checked;
         saveState();
       });
+      document.getElementById('digital-toggle')?.addEventListener('change', e => {
+        if (e.target.checked) {
+          state.digital.enabled = true;
+          state.digital.social = state.digital.messages = state.digital.email = state.digital.screentime = true;
+        } else {
+          state.digital.enabled = false;
+        }
+        saveState();
+      });
       document.querySelectorAll('[data-del-contact]').forEach(btn => {
         btn.addEventListener('click', () => {
           const i = parseInt(btn.dataset.delContact);
@@ -688,6 +814,7 @@ function bindScreenEvents(screenId) {
           state.contacts = [];
           state.messages = [];
           state.onboardingComplete = false;
+          state.digital.enabled = false;
           localStorage.removeItem('manas_proto_state');
           navigate('welcome');
         }
@@ -804,6 +931,36 @@ function showAddContactSheet() {
   });
 }
 
+function showDigitalSheet() {
+  const d = state.digital;
+  showSheet(`
+    <div class="sheet-handle"></div>
+    <button class="sheet-close" onclick="App.hideSheet()">×</button>
+    <div class="sheet-title">Digital Signals</div>
+    <div style="font-size:13px;color:var(--ios-l2);line-height:1.5;margin:-8px 0 16px;text-align:center;">
+      Manas analyzes behavioral <em>patterns</em> — not content — to detect early changes in your wellbeing.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+      ${digitalSignalRow('dsheet-social','📲','var(--indigo-l)','Social Media','Engagement &amp; usage patterns', d.social)}
+      ${digitalSignalRow('dsheet-messages','💬','var(--lav-l)','Message Tone','On-device sentiment only', d.messages)}
+      ${digitalSignalRow('dsheet-email','✉️','rgba(255,179,151,0.18)','Email Tone','On-device sentiment only', d.email)}
+      ${digitalSignalRow('dsheet-screentime','⏱️','rgba(168,230,207,0.30)','Screen Time','Daily totals &amp; late-night use', d.screentime)}
+    </div>
+    <button class="btn btn-primary" id="dsheet-save">Enable Digital Signals</button>
+    <div class="sheet-cancel" onclick="App.hideSheet()">Not now</div>
+  `);
+  document.getElementById('dsheet-save')?.addEventListener('click', () => {
+    state.digital.social     = document.getElementById('dsheet-social').checked;
+    state.digital.messages   = document.getElementById('dsheet-messages').checked;
+    state.digital.email      = document.getElementById('dsheet-email').checked;
+    state.digital.screentime = document.getElementById('dsheet-screentime').checked;
+    state.digital.enabled    = true;
+    saveState();
+    hideSheet();
+    navigate('dashboard');
+  });
+}
+
 function showLearnMore() {
   showSheet(`
     <div class="sheet-handle"></div>
@@ -866,6 +1023,7 @@ const dev = {
       state.onboardingComplete = false;
       state.contacts = [];
       state.messages = [];
+      state.digital.enabled = false;
       localStorage.removeItem('manas_proto_state');
       navigate('welcome');
     }
@@ -878,7 +1036,7 @@ function updateDevState() {
   el.textContent =
     `screen: ${state.screen}\nrisk: ${state.riskLevel}\nwellness: ${state.wellnessScore}\n` +
     `contacts: ${state.contacts.length}\npersona: ${state.persona}\n` +
-    `onboarded: ${state.onboardingComplete}`;
+    `onboarded: ${state.onboardingComplete}\ndigital: ${state.digital.enabled ? 'on' : 'off'}`;
 }
 
 /* ═══════════════════════════════════════
