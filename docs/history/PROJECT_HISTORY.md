@@ -158,6 +158,6 @@ All features from REQUIREMENTS.md FR-4 through FR-7 implemented:
 - [ ] Run `scripts/make_stub_model.py` on Python 3.9-3.11 machine → add `EmotionClassifier.mlpackage` to Xcode target
 - [ ] Kyle submits FamilyControls request to Apple (apple.com/contact/request/family-controls-distribution)
 - [ ] Run `scripts/generate_pin_hash.sh api.maanas.health` once server is live → add hash to `ManasDev.plist`
-- [ ] BAA with MAANAS backend operator before any PHI-adjacent data transmitted in production
+- [x] BAA: runtime gate implemented in `BackendService`; `docs/compliance/BAA_REQUIREMENTS.md` written ✅ — execute BAA then set `MAANAS_BAA_CONFIRMED=true`
 - [ ] Kinshuk: add `@app.websocket("/ws/telemetry")` FastAPI endpoint (see ADR-003)
 - [ ] Post FamilyControls approval: add DeviceActivityReportExtension Xcode target + App Group entitlement
