@@ -67,12 +67,26 @@ final class BackendService: NSObject, ObservableObject {
         disconnectTelemetry()
     }
 
+    // MARK: - BAA gate
+    // PHI-adjacent calls (telemetry, chat, risk events) are blocked until a BAA
+    // with the backend operator is confirmed. Auth is always permitted.
+    // Set MAANAS_BAA_CONFIRMED = true in ManasDev.plist once the BAA is executed.
+    // See docs/compliance/BAA_REQUIREMENTS.md.
+
+    private var baaGuardPassed: Bool {
+        guard config.baaConfirmed else {
+            log.error("BAA not confirmed — PHI-adjacent call blocked. Execute BAA and set MAANAS_BAA_CONFIRMED=true.")
+            return false
+        }
+        return true
+    }
+
     // MARK: - Native WebSocket telemetry (ADR-003)
     // Connects to /ws/telemetry?token=<jwt>
     // Exchanges plain JSON objects — no Socket.IO framing.
 
     func connectTelemetry() {
-        guard let token = jwt else { return }
+        guard baaGuardPassed, let token = jwt else { return }
 
         var components = URLComponents(url: config.webSocketURL.appendingPathComponent("/ws/telemetry"),
                                        resolvingAgainstBaseURL: false)!
@@ -107,7 +121,7 @@ final class BackendService: NSObject, ObservableObject {
     // MARK: - Risk event reporting
 
     func reportRiskEvent(_ event: RiskEvent) async {
-        guard isAuthenticated else { return }
+        guard baaGuardPassed, isAuthenticated else { return }
         struct Body: Encodable { let id, severity: String; let timestamp: Date }
         let body = Body(id: event.id.uuidString,
                         severity: event.severity.rawValue,
@@ -119,6 +133,7 @@ final class BackendService: NSObject, ObservableObject {
     // MARK: - LLM chat
 
     func chat(message: String, persona: String, context: ChatContext) async throws -> String {
+        guard baaGuardPassed else { throw BackendError.baaRequired }
         struct Body: Encodable { let message, persona: String; let context: ChatContext }
         struct Resp: Decodable { let reply: String }
         let resp: Resp = try await post(path: "/api/llm/chat",
@@ -257,13 +272,14 @@ struct ChatContext: Encodable {
 // MARK: - Errors
 
 enum BackendError: LocalizedError {
-    case authFailed, notAuthenticated, chatFailed, httpError(Int)
+    case authFailed, notAuthenticated, chatFailed, httpError(Int), baaRequired
     var errorDescription: String? {
         switch self {
         case .authFailed:          return "Authentication failed"
         case .notAuthenticated:    return "Not authenticated"
         case .chatFailed:          return "Companion request failed"
         case .httpError(let code): return "HTTP \(code)"
+        case .baaRequired:         return "Backend calls blocked — BAA not yet confirmed (see docs/compliance/BAA_REQUIREMENTS.md)"
         }
     }
 }

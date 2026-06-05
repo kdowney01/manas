@@ -23,6 +23,7 @@ struct AppConfig {
     let apiBaseURL: URL
     let webSocketURL: URL
     let tlsPinnedHashes: [String]   // SHA-256 of server public key(s), base64-encoded
+    let baaConfirmed: Bool           // BAA with backend operator executed — gates PHI-adjacent calls
     let logLevel: LogLevel
 
     private init() {
@@ -43,12 +44,16 @@ struct AppConfig {
         )
         webSocketURL  = URL(string: wsString)!
 
-        // Add your server's SHA-256 public key hashes here before shipping.
-        // Generate with: openssl s_client -connect api.maanas.health:443 | \
-        //   openssl x509 -pubkey -noout | openssl pkey -pubin -outform DER | \
-        //   openssl dgst -sha256 -binary | base64
+        // TLS cert pinning — intermediate CA hash.
+        // Generate with: scripts/generate_pin_hash.sh api.maanas.health
         let pinHash = Self.resolve("MAANAS_PIN_HASH", plist: plist, default: "")
         tlsPinnedHashes = pinHash.isEmpty ? [] : [pinHash]
+
+        // BAA gate — must be true before any PHI-adjacent data is transmitted.
+        // Set MAANAS_BAA_CONFIRMED = true in ManasDev.plist once BAA is executed.
+        // See docs/compliance/BAA_REQUIREMENTS.md for what must be in place first.
+        let baaFlag = Self.resolve("MAANAS_BAA_CONFIRMED", plist: plist, default: "false")
+        baaConfirmed = baaFlag.lowercased() == "true"
 
         logLevel = environment == .production ? .warning : .debug
     }
