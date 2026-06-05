@@ -177,7 +177,16 @@ final class BackendService: NSObject, ObservableObject {
     }
 }
 
-// MARK: - Certificate pinning (SHA-256 public key)
+// MARK: - Certificate pinning (SHA-256 public key, intermediate CA)
+//
+// Pins the intermediate CA rather than the leaf cert (ADR-003).
+// Walks the full certificate chain — if ANY cert's public key hash matches
+// a configured pin, the connection is trusted. This means the pin survives
+// leaf cert rotation as long as the same CA is used.
+//
+// To generate the hash for your server:
+//   scripts/generate_pin_hash.sh api.maanas.health
+// Then add the intermediate hash to ManasDev.plist as MAANAS_PIN_HASH.
 
 extension BackendService: URLSessionDelegate {
     func urlSession(
@@ -193,28 +202,34 @@ extension BackendService: URLSessionDelegate {
             return
         }
 
+        // No pins configured (dev/pre-production) — use default trust evaluation.
         guard !config.tlsPinnedHashes.isEmpty else {
+            log.info("Cert pinning: no pins configured — using default trust (dev mode)")
             completionHandler(.performDefaultHandling, URLCredential(trust: serverTrust))
             return
         }
 
-        guard
-            let leafCert  = SecTrustCopyCertificateChain(serverTrust).flatMap({ $0 as? [SecCertificate] })?.first,
-            let publicKey = SecCertificateCopyKey(leafCert),
-            let keyData   = SecKeyCopyExternalRepresentation(publicKey, nil) as Data?
-        else {
-            log.error("Cert pinning: failed to extract server public key")
+        guard let chain = SecTrustCopyCertificateChain(serverTrust) as? [SecCertificate] else {
+            log.error("Cert pinning: failed to copy certificate chain")
             completionHandler(.cancelAuthenticationChallenge, nil)
             return
         }
 
-        let hash = SHA256.hash(data: keyData)
-        let hashBase64 = Data(hash).base64EncodedString()
+        // Walk the chain — check leaf, intermediate(s), and root against pinned hashes.
+        let matched = chain.contains { cert in
+            guard
+                let publicKey = SecCertificateCopyKey(cert),
+                let keyData   = SecKeyCopyExternalRepresentation(publicKey, nil) as Data?
+            else { return false }
+            let hash = Data(SHA256.hash(data: keyData)).base64EncodedString()
+            return config.tlsPinnedHashes.contains(hash)
+        }
 
-        if config.tlsPinnedHashes.contains(hashBase64) {
+        if matched {
+            log.info("Cert pinning: ✓ chain contains a pinned hash")
             completionHandler(.useCredential, URLCredential(trust: serverTrust))
         } else {
-            log.error("Cert pinning: hash mismatch — connection rejected")
+            log.error("Cert pinning: ✗ no cert in chain matched — connection rejected")
             completionHandler(.cancelAuthenticationChallenge, nil)
         }
     }

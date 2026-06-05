@@ -1,5 +1,28 @@
 # MANAS — Scripts
 
+## Certificate Pin Hash
+
+### generate_pin_hash.sh
+
+Generates SHA-256 public key hashes for all certs in the server's chain.
+MANAS uses **intermediate CA pinning** — copy the hash labelled
+`INTERMEDIATE ← use this one` into `ManasDev.plist`.
+
+```bash
+./generate_pin_hash.sh api.maanas.health
+# or for a non-standard port:
+./generate_pin_hash.sh api.maanas.health 8443
+```
+
+Then in `ManasDev.plist`:
+```xml
+<key>MAANAS_PIN_HASH</key>
+<string>PASTE_INTERMEDIATE_HASH_HERE</string>
+```
+
+Intermediate CA pinning survives leaf cert rotation (Let's Encrypt renews
+every 90 days) as long as the same CA is used. See ADR-003.
+
 ## Emotion Model Conversion
 
 ### Production: convert_emotion_model.py
