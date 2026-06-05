@@ -64,11 +64,12 @@ See `docs/PROJECT_OVERVIEW.md` for full context.
 
 ## Open Items
 
-- [ ] Run `scripts/make_stub_model.py` on Python 3.9-3.11 machine → drop `EmotionClassifier.mlpackage` into `Manas/Resources/` + add to Xcode target
-- [ ] Request Apple FamilyControls entitlement: apple.com/contact/request/family-controls-distribution
-- [ ] Cert pinning: run `openssl` against production server cert → put SHA-256 hash in `ManasDev.plist` as `MAANAS_PIN_HASH`
+- [x] CoreML conversion scripts written (`scripts/`) — Kinshuk runs on Python 3.9-3.11
+- [x] FamilyControls submission prepared (`docs/compliance/FAMILY_CONTROLS_SUBMISSION.md`) — Kyle submits to Apple
+- [ ] Cert pinning: generate SHA-256 hash of production server cert → `ManasDev.plist` as `MAANAS_PIN_HASH`
 - [ ] BAA with MAANAS backend operator before any PHI-adjacent data transmitted in production
-- [ ] Kinshuk: add `@app.websocket("/ws/telemetry")` endpoint to FastAPI (see ADR-003)
+- [ ] Kinshuk: add `@app.websocket("/ws/telemetry")` to FastAPI (see ADR-003)
+- [ ] Post FamilyControls approval: add DeviceActivityReportExtension Xcode target + App Group entitlement
 
 ## MIT Course Alignment
 
