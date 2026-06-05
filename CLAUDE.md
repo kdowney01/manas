@@ -64,13 +64,11 @@ See `docs/PROJECT_OVERVIEW.md` for full context.
 
 ## Open Items
 
-- [ ] CoreML model: convert `emotion_model.onnx` → `EmotionClassifier.mlpackage` using coremltools
-- [ ] Add Montserrat .ttf files to `Manas/Resources/Fonts/` and register in Xcode target
-- [ ] FamilyControls entitlement: request Apple approval for DeviceActivity
-- [ ] Certificate pinning: implement SHA-256 hash pinning in `BackendService.swift`
-- [ ] Add SocketIO-Client-Swift via SPM for Socket.IO telemetry protocol
-- [ ] Implement FR-2: facial emotion analysis (AVFoundation + VNFaceObservationRequest + CoreML)
-- [ ] Add `Manas.entitlements` entries for HealthKit background + FamilyControls
+- [ ] Run `scripts/make_stub_model.py` on Python 3.9-3.11 machine → drop `EmotionClassifier.mlpackage` into `Manas/Resources/` + add to Xcode target
+- [ ] Request Apple FamilyControls entitlement: apple.com/contact/request/family-controls-distribution
+- [ ] Cert pinning: run `openssl` against production server cert → put SHA-256 hash in `ManasDev.plist` as `MAANAS_PIN_HASH`
+- [ ] BAA with MAANAS backend operator before any PHI-adjacent data transmitted in production
+- [ ] Kinshuk: add `@app.websocket("/ws/telemetry")` endpoint to FastAPI (see ADR-003)
 
 ## MIT Course Alignment
 

@@ -84,13 +84,61 @@ All features from REQUIREMENTS.md FR-4 through FR-7 implemented:
 - NSCameraUsageDescription, NSMicrophoneUsageDescription added.
 - UIAppFonts registered for all 5 Montserrat weights.
 
+## 2026-06-03 — Infrastructure hardening + WebSocket migration
+
+### Completed in this session (all committed)
+
+**Telemetry transport — Socket.IO → Native WebSocket (ADR-003):**
+- `BackendService.swift` rewritten to use `URLSessionWebSocketTask` with plain JSON
+- Connects to `/ws/telemetry?token=<jwt>` — a new additive FastAPI endpoint
+- All Socket.IO framing (Engine.IO handshake, `42[...]` event packets, namespace negotiation) removed
+- Native WebSocket ping replaces manual Engine.IO PING frame
+- React/MaanasWatch clients unaffected — Socket.IO server unchanged
+- `docs/decisions/ADR-003-native-websocket.md` written with backend implementation snippet for Kinshuk
+
+**AppConfig — multi-environment URL resolution:**
+- `Core/Config/AppConfig.swift` — resolves API URL from `ManasDev.plist` → env var → compiled default
+- Default: `http://localhost:8000` (dev); `NSAllowsLocalNetworking` added to Info.plist
+
+**Certificate pinning:**
+- SHA-256 public-key pinning implemented in `BackendService.URLSessionDelegate`
+- Hash slot wired to `AppConfig.tlsPinnedHashes` — populated via `ManasDev.plist` or `MAANAS_PIN_HASH` env var
+- Generates + compares hash of server leaf cert public key using `CryptoKit`
+
+**FamilyControls entitlement:**
+- `com.apple.developer.family-controls` added to `Manas.entitlements`
+- `DeviceActivityMonitor` updated with activation code commented inline — one uncomment away once Apple approves
+- Submission URL: apple.com/contact/request/family-controls-distribution
+
+**Montserrat fonts:**
+- All 5 weights (Regular/Medium/SemiBold/Bold/ExtraBold) downloaded from Google Fonts GitHub
+- Bundled in `Manas/Resources/Fonts/`
+- Registered in Info.plist `UIAppFonts`; added to Xcode project Resources build phase
+
+**Facial emotion analysis (FR-2):**
+- `Core/FacialEmotion/EmotionResult.swift` — 7-class `EmotionVector`, rolling `EmotionSession` smoother
+- `Core/FacialEmotion/FACSRuleEngine.swift` — full Ekman AU→emotion rules from `VNFaceLandmarks2D` geometry (AU1/2/4/5/6/7/9/12/15/17/20/23/25/26)
+- `Core/FacialEmotion/FacialEmotionAnalyzer.swift` — AVCaptureSession + Vision + CoreML two-tier pipeline; auto-stops on background; FACS-only mode when `.mlpackage` absent
+- `BiometricSnapshot` updated with `emotionVector` field; `StressIndex.compute` updated to fuse physiological + facial signals
+- `RiskScoringEngine` updated: emotion stress signal adds up to 15% weight when camera available
+
+**CoreML model conversion (item 1 of 4 remaining):**
+- `scripts/convert_emotion_model.py` — production converter for Kinshuk: ONNX → mlpackage targeting iOS 17, 7-class classifier contract, image normalization to [-1,1]
+- `scripts/make_stub_model.py` — dev stub generator: minimal mlpackage returning near-neutral probabilities for end-to-end pipeline testing
+- `scripts/README.md` — model contract, usage instructions, Xcode integration steps
+
+**Documentation:**
+- `docs/ui-mocks.html` v0.3 — HIG light mode, brand colors, Oura/Calm-inspired layout, actual logo
+- `docs/wireframe-tree.html` — full app navigation tree with dark glass card styling
+- `docs/architecture/ARCHITECTURE.md` — fully rewritten with transport split diagram, security table, nav structure, risk weight table
+
+**Xcode project:**
+- `project.pbxproj` updated: all 24 new Swift sources registered in Compile Sources; Resources build phase added (was missing); 5 fonts + 2 logos added to Copy Bundle Resources; 13 new groups added
+
 ## Open Items / Next Steps
-- [ ] CoreML model conversion: `emotion_model.onnx` → `EmotionClassifier.mlpackage` (coremltools)
-- [ ] Add Montserrat .ttf files to `Manas/Resources/Fonts/` + Xcode Copy Bundle Resources
-- [ ] Request Apple FamilyControls entitlement for DeviceActivity monitoring
-- [ ] Implement cert pinning (SHA-256 hash) in BackendService before production
-- [ ] Add SocketIO-Client-Swift via Swift Package Manager
-- [ ] Implement FR-2: facial emotion analysis (AVFoundation camera session + VNFaceObservationRequest + CoreML EmotionClassifier)
-- [ ] Verify Manas.entitlements has HealthKit background delivery + add FamilyControls when approved
-- [ ] BAA with MAANAS backend operator before any PHI-adjacent data transmitted
-- [ ] Set MAANAS_API_URL in Xcode scheme environment variables
+- [x] CoreML conversion script — written (`scripts/`); Kinshuk runs on machine with Python 3.9-3.11
+- [ ] Run `make_stub_model.py` to generate dev `.mlpackage` for local testing (needs Python 3.9-3.11)
+- [ ] Request Apple FamilyControls entitlement (apple.com/contact/request/family-controls-distribution)
+- [ ] Cert pinning: generate SHA-256 hash of production server cert and add to `ManasDev.plist`
+- [ ] BAA with MAANAS backend operator before any PHI-adjacent data transmitted in production
+- [ ] Kinshuk: add `@app.websocket("/ws/telemetry")` FastAPI endpoint (see ADR-003)
