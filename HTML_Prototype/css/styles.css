@@ -125,7 +125,7 @@ a { color: var(--indigo); text-decoration: none; }
   flex-shrink: 0;
   z-index: 40;
 }
-.nav-bar.large-title { min-height: 96px; padding-bottom: 10px; }
+.nav-bar.large-title { min-height: 64px; padding-bottom: 0; align-items: center; }
 .nav-title {
   font-size: 17px;
   font-weight: 600;
@@ -137,6 +137,10 @@ a { color: var(--indigo); text-decoration: none; }
   font-weight: 800;
   color: var(--indigo);
   letter-spacing: -0.03em;
+}
+.nav-logo {
+  height: 48px;
+  width: auto;
 }
 .nav-btn {
   width: 32px; height: 32px;
@@ -401,7 +405,12 @@ a { color: var(--indigo); text-decoration: none; }
   flex-direction: column;
   align-items: center;
   padding: 20px 24px 36px;
-  background: #fff;
+  background:
+    radial-gradient(ellipse 160% 60% at 50%  -10%, rgba(92,108,179,0.40)  0%, transparent 65%),
+    radial-gradient(ellipse 90%  55% at 0%   100%, rgba(168,230,207,0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 80%  50% at 105% 95%,  rgba(173,108,173,0.35) 0%, transparent 58%),
+    radial-gradient(ellipse 55%  40% at 85%  5%,   rgba(255,179,151,0.22) 0%, transparent 52%),
+    #ffffff;
 }
 .onboard-top {
   flex: 1;

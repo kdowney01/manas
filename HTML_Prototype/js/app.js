@@ -173,7 +173,7 @@ function navigate(screenId, opts = {}) {
     nb.classList.remove('hidden');
     nb.classList.add('large-title');
     nb.innerHTML = `
-      <div class="nav-title-large">manas</div>
+      <img src="assets/manas_logo.png" class="nav-logo" alt="manas"/>
       <button class="nav-btn" id="refresh-btn" title="Refresh">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
           <polyline points="23 4 23 10 17 10"/>
