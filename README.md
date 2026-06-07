@@ -112,12 +112,40 @@ State is held in a single `state` object and persisted to `localStorage`
 ### Screens & flows
 
 - **Onboarding (6 steps):** Welcome → Health Access → **Digital Wellbeing** →
-  Emergency Contacts → Notifications → Calibration
-- **Dashboard:** wellbeing-score ring, biometric tiles, **Digital Wellbeing** signals,
-  daily insight, and recent alerts
-- **Companion:** chat UI with 6 doctor personas and a simulated, keyword-driven responder
-- **Crisis:** 988 call/text, emergency-contact alerts, companion link
-- **Settings:** emergency contacts, notifications, digital-signals toggle, privacy, data export/delete
+  Emergency Contacts → Notifications → Calibration. The Emergency Contacts step (and the
+  Settings sheet) can pull from a simulated device contact picker (the iOS app would use
+  `CNContactPickerViewController`).
+- **Today (Dashboard):** three tappable score cards — **Overall Wellbeing** (hero),
+  **Physio Wellbeing**, and **Digital Wellbeing** — each with a score ring and an
+  attention badge counting flagged signals.
+- **Detail screens** (one per card): a score ring with short, tone-aware commentary
+  (playful when high, gentle and encouraging when low), the signal tiles with **OK / Watch**
+  status, and a *Needs attention* block calling out each weak signal. The Overall detail
+  also holds the **Breakdown** (Physio/Digital sub-scores), **Daily Insight**, and
+  **Recent Alerts**.
+- **Companion:** chat UI with 6 doctor personas and a simulated, keyword-driven responder.
+- **Crisis:** 988 call/text, emergency-contact alerts, companion link.
+- **Settings:** emergency contacts, notifications, **Overall score method**, digital-signals
+  toggle, privacy, data export/delete.
+- **Privacy:** a plain-English explanation of how Manas protects the user's data.
+- **Lock-screen notification:** an iPhone lock screen (photo wallpaper, Liquid Glass banner)
+  demoing a gentle digital-wellbeing nudge.
+
+### Consistent app chrome
+
+- **Top nav** on every post-onboarding screen: white bar with a bottom hairline, the Manas
+  logo on the left (taps back to Today), and a hamburger on the right that opens a side-drawer
+  menu (Today, the three wellbeing details, Companion, Settings, **Get Help Now**, Privacy,
+  Sign Out).
+- **Bottom tab bar** (Today / Companion / Settings) on the main screens.
+
+### Wellbeing scoring
+
+- **Physio** score is derived from the mock biometrics; **Digital** from the behavioral
+  signals. Each flags individual signals as OK or *Watch* against a personal baseline.
+- **Overall** combines the two via a user-selectable method (Settings → Overall score method):
+  Equal average, Physio-weighted, or **Lowest-pulls-down** (default — weights the weaker
+  domain so one low area isn't masked).
 
 ### Digital signals (onboarding + dashboard)
 
@@ -126,8 +154,8 @@ as wellbeing inputs:
 
 - A dedicated **"Digital Wellbeing"** onboarding step with per-signal toggles and a
   **Skip for now** option.
-- A **"Digital Wellbeing"** dashboard section showing tiles for the enabled signals, or a
-  *"Add digital signals"* prompt (with an enable sheet) when the user skipped.
+- A **Digital Wellbeing** score card + detail screen, or an *"Add digital signals"* prompt
+  (with an enable sheet) when the user skipped.
 - Privacy framing throughout: only **derived** scores (tone, frequency, duration) are
   computed, **on-device** — raw messages, emails, and content are never stored or transmitted.
 
@@ -136,9 +164,11 @@ as wellbeing inputs:
 The desktop dev panel (right of the phone) lets you:
 
 - Jump directly to any screen
-- Force a risk level (Low / Moderate / High / Crisis)
+- Force a risk level (Low / Moderate / High / Crisis) — presets drive the signals so the
+  scores and badges react cohesively
 - Refresh mock biometrics and reset onboarding
-- Watch live app state (current screen, risk, wellness, contacts, persona, onboarding, digital on/off)
+- Watch live app state (screen, risk, overall/physio/digital scores, contacts, persona,
+  onboarding, score method)
 
 ---
 
