@@ -126,6 +126,21 @@ a { color: var(--indigo); text-decoration: none; }
   z-index: 40;
 }
 .nav-bar.large-title { min-height: 64px; padding-bottom: 0; align-items: center; }
+/* Consistent app nav — logo left, hamburger right, white with a subtle bottom line */
+.nav-bar.app-nav {
+  min-height: 56px;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-bar.app-nav .nav-logo { height: 34px; }
+.nav-menu-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; margin-right: -8px;
+  color: var(--ios-l1);
+  background: none; border: none;
+}
+.nav-menu-btn:active { opacity: 0.55; }
 .nav-title {
   font-size: 17px;
   font-weight: 600;
@@ -535,6 +550,136 @@ a { color: var(--indigo); text-decoration: none; }
 /* Alerts section */
 .alerts-hd { font-size: 14px; font-weight: 700; color: var(--ios-l1); margin-bottom: 7px; }
 
+/* Scored signal section (Physio Health / Digital Wellbeing) */
+.signal-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.signal-hd-title { font-size: 14px; font-weight: 700; color: var(--ios-l1); }
+.signal-hd-meta  { display: flex; align-items: center; gap: 8px; }
+.signal-score    { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+.signal-score-of { font-size: 11px; font-weight: 600; color: var(--ios-l3); }
+.signal-badge {
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 9px;
+  background: var(--risk-high); color: #fff;
+  font-size: 11px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* Watch badge on a metric tile's icon */
+.metric-ico-wrap { position: relative; }
+.metric-badge {
+  position: absolute; top: -3px; right: -3px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--risk-high);
+  border: 2px solid var(--ios-card);
+}
+
+/* ═══════════════════════════════════════════
+   DASHBOARD — THREE SCORE CARDS
+═══════════════════════════════════════════ */
+/* Overall hero card (distinguished by brand tint + accent strip) */
+.overall-card {
+  position: relative;
+  cursor: pointer;
+  border-top: 3px solid var(--indigo);
+  background: linear-gradient(180deg, rgba(92,108,179,0.07), #ffffff);
+  transition: opacity 0.15s, transform 0.1s;
+}
+.overall-card:active { opacity: 0.9; transform: scale(0.995); }
+.card-chevron {
+  margin-left: auto; align-self: center;
+  font-size: 22px; font-weight: 300; color: var(--ios-l3);
+}
+
+/* Compact Physio / Digital cards */
+.card-pair { display: flex; gap: 10px; }
+.mini-card {
+  flex: 1; min-height: 138px;
+  background: var(--ios-card);
+  border-radius: var(--radius-card);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  padding: 12px 12px 14px;
+  cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.mini-card:active { opacity: 0.85; transform: scale(0.99); }
+.mini-top { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+.mini-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: -0.01em; }
+.mini-ring { margin: 2px 0; }
+.mini-foot { font-size: 11px; font-weight: 600; color: var(--ios-l3); margin-top: auto; }
+.mini-card-empty { justify-content: space-between; }
+.mini-empty-plus { font-size: 30px; font-weight: 300; color: var(--indigo); line-height: 1; margin: 14px 0; }
+
+/* ═══════════════════════════════════════════
+   SECTION DETAIL SCREENS
+═══════════════════════════════════════════ */
+.detail-screen {
+  padding: 12px 14px 24px;
+  display: flex; flex-direction: column; gap: 10px;
+  background: var(--ios-bg);
+}
+.ring-card.accent-physio  { border-top: 3px solid var(--lavender); }
+.ring-card.accent-digital { border-top: 3px solid var(--lavender); }
+
+/* Overall breakdown rows */
+.bd-bar {
+  height: 6px; border-radius: 3px;
+  background: var(--ios-sep); overflow: hidden; margin-top: 7px;
+}
+.bd-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+.bd-score { font-size: 16px; font-weight: 800; min-width: 26px; text-align: right; }
+
+/* Flagged-area & ok callouts */
+.flag-card {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 13px 15px;
+  background: var(--ios-card); border-radius: 14px;
+  border-left: 4px solid var(--risk-high);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.flag-icon  { font-size: 20px; flex-shrink: 0; }
+.flag-title { font-size: 14px; font-weight: 700; color: var(--ios-l1); }
+.flag-tip   { font-size: 12px; color: var(--ios-l2); margin-top: 3px; line-height: 1.5; }
+.ok-block {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 16px;
+  background: var(--ios-card); border-radius: 14px;
+  border-left: 4px solid var(--risk-low);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.ok-check {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--risk-low-l); color: var(--risk-low);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; flex-shrink: 0;
+}
+.detail-empty {
+  background: var(--ios-card); border-radius: 16px;
+  padding: 28px 20px; text-align: center; margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.detail-note { font-size: 11px; color: var(--ios-l3); line-height: 1.5; padding: 0 2px; margin-top: 2px; }
+
+/* Privacy page */
+.privacy-hero { text-align: center; padding: 6px 6px 4px; }
+.privacy-hero-icon { font-size: 40px; margin-bottom: 8px; }
+.privacy-hero-title { font-size: 20px; font-weight: 800; color: var(--ios-l1); letter-spacing: -0.02em; }
+.privacy-hero-sub {
+  font-size: 13px; color: var(--ios-l2); line-height: 1.5;
+  margin: 6px auto 0; max-width: 300px;
+}
+.privacy-item {
+  display: flex; gap: 13px; align-items: flex-start;
+  background: var(--ios-card); border-radius: 14px;
+  padding: 14px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.privacy-item-icon { font-size: 22px; flex-shrink: 0; line-height: 1.2; }
+.privacy-item-title { font-size: 14px; font-weight: 700; color: var(--ios-l1); }
+.privacy-item-body { font-size: 13px; color: var(--ios-l2); line-height: 1.5; margin-top: 3px; }
+
 /* Digital wellbeing */
 .digital-prompt {
   display: flex; align-items: center; gap: 12px;
@@ -715,6 +860,126 @@ a { color: var(--indigo); text-decoration: none; }
 }
 
 /* ═══════════════════════════════════════════
+   SCREEN — LOCK-SCREEN NOTIFICATION
+═══════════════════════════════════════════ */
+/* Mountain-photo wallpaper fills the whole phone (incl. behind status bar) */
+.phone.lock-mode {
+  background: url('../assets/wallpaper.jpg') center / cover no-repeat;
+}
+.phone.lock-mode .screen-root { background: transparent; }
+.phone.lock-mode .home-bar { background: transparent; }
+.phone.lock-mode .home-bar::before { background: rgba(255,255,255,0.6); }
+/* White status bar over the wallpaper */
+.phone.lock-mode .status-bar { color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+.phone.lock-mode .sb-icons svg { filter: brightness(0) invert(1) drop-shadow(0 1px 1px rgba(0,0,0,0.3)); }
+
+.lock-screen {
+  min-height: 100%;
+  display: flex; flex-direction: column;
+  padding: 22px 18px 14px;
+}
+.lock-time-wrap { text-align: center; margin-top: 16px; }
+.lock-date {
+  font-size: 15px; font-weight: 600;
+  color: rgba(255,255,255,0.9); letter-spacing: 0.01em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.lock-clock {
+  font-size: 74px; font-weight: 700; line-height: 1.04;
+  color: #ffffff; letter-spacing: -0.02em;
+  margin-top: 2px;
+  text-shadow: 0 1px 14px rgba(0,0,0,0.35);
+}
+.lock-notifs { margin: 32px 0 0; display: flex; flex-direction: column; gap: 8px; }
+
+/* Liquid Glass */
+.ios-notif {
+  position: relative;
+  display: flex; gap: 11px; align-items: center;
+  background: rgba(255,255,255,0.20);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-radius: 22px;
+  padding: 13px 15px;
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.18),
+    inset 0 1px 1px rgba(255,255,255,0.55),
+    inset 0 -1px 1px rgba(255,255,255,0.12);
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.ios-notif::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(160deg, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.06) 38%, transparent 60%);
+}
+.ios-notif > * { position: relative; }
+.ios-notif:active { opacity: 0.9; transform: scale(0.99); }
+.ios-notif-icon {
+  width: 38px; height: 38px; border-radius: 9px;
+  background: #fff; object-fit: contain; padding: 4px;
+  flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.ios-notif-body { flex: 1; min-width: 0; }
+.ios-notif-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2px;
+}
+.ios-notif-app {
+  font-size: 13px; font-weight: 700; color: #ffffff;
+  text-transform: uppercase; letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.ios-notif-time { font-size: 12px; color: rgba(255,255,255,0.75); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+.ios-notif-text { font-size: 14px; line-height: 1.4; color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+
+/* ═══════════════════════════════════════════
+   HAMBURGER MENU — SIDE DRAWER
+═══════════════════════════════════════════ */
+.menu-overlay {
+  position: absolute; inset: 0; z-index: 60;
+  background: rgba(0,0,0,0.38);
+}
+.menu-drawer {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 80%; max-width: 290px;
+  background: var(--ios-card);
+  z-index: 61;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(.22,1,.36,1);
+  box-shadow: -8px 0 30px rgba(0,0,0,0.22);
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.menu-drawer.open { transform: translateX(0); }
+.menu-drawer::-webkit-scrollbar { display: none; }
+.menu-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid var(--ios-sep);
+}
+.menu-logo { height: 32px; width: auto; }
+.menu-close {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--ios-fill); color: var(--ios-l2);
+  font-size: 18px; display: flex; align-items: center; justify-content: center;
+}
+.menu-links { display: flex; flex-direction: column; padding: 10px 0; }
+.menu-link {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px;
+  font-family: var(--font); font-size: 16px; font-weight: 600;
+  color: var(--ios-l1); text-align: left;
+  background: none; border: none;
+}
+.menu-link:active { background: var(--ios-fill); }
+.menu-link-icon { font-size: 18px; width: 24px; text-align: center; }
+.menu-divider { height: 1px; background: var(--ios-sep); margin: 8px 20px; }
+.menu-link-crisis { color: var(--risk-crisis); }
+.menu-link-muted  { color: var(--ios-l2); font-weight: 500; }
+
+/* ═══════════════════════════════════════════
    MODAL / SHEET
 ═══════════════════════════════════════════ */
 .modal-overlay {
@@ -760,6 +1025,31 @@ a { color: var(--indigo); text-decoration: none; }
   text-align: center; color: var(--ios-l2); font-size: 15px;
   padding: 12px; cursor: pointer; font-weight: 500;
 }
+/* Contact picker */
+.ec-or {
+  text-align: center; font-size: 11px; color: var(--ios-l3);
+  text-transform: uppercase; letter-spacing: 0.06em; margin: 2px 0;
+}
+.contact-pick-list { display: flex; flex-direction: column; max-height: 46vh; overflow-y: auto; margin-bottom: 8px; }
+.contact-pick-list::-webkit-scrollbar { display: none; }
+.contact-pick-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 6px;
+  background: none; border: none; border-bottom: 1px solid var(--ios-sep);
+  text-align: left; font-family: var(--font); width: 100%;
+}
+.contact-pick-row:last-child { border-bottom: none; }
+.contact-pick-row:active { background: var(--ios-fill); }
+.contact-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--indigo-l); color: var(--indigo);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+.contact-pick-info { display: flex; flex-direction: column; }
+.contact-pick-name { font-size: 15px; font-weight: 600; color: var(--ios-l1); }
+.contact-pick-phone { font-size: 12px; color: var(--ios-l2); margin-top: 1px; }
+
 .persona-list { display: flex; flex-direction: column; gap: 8px; }
 .persona-list-item {
   display: flex; align-items: center; gap: 12px;

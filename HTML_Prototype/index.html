@@ -73,6 +73,10 @@
       </nav>
 
       <div class="home-bar"></div>
+
+      <!-- Hamburger menu (side drawer) -->
+      <div id="menu-overlay" class="menu-overlay hidden"></div>
+      <div id="menu-drawer" class="menu-drawer"></div>
     </div>
 
     <!-- ── Dev Tools Panel ── -->
@@ -89,10 +93,14 @@
         <button class="dev-btn" onclick="App.dev.goto('emergency-contacts')">Emergency Contacts</button>
         <button class="dev-btn" onclick="App.dev.goto('notifications')">Notifications</button>
         <button class="dev-btn" onclick="App.dev.goto('calibration')">Calibration</button>
-        <button class="dev-btn" onclick="App.dev.goto('dashboard')">Dashboard</button>
+        <button class="dev-btn" onclick="App.dev.goto('overall-detail')">Overall Detail</button>
+        <button class="dev-btn" onclick="App.dev.goto('physio-detail')">Physio Detail</button>
+        <button class="dev-btn" onclick="App.dev.goto('digital-detail')">Digital Detail</button>
         <button class="dev-btn" onclick="App.dev.goto('companion')">Companion</button>
         <button class="dev-btn" onclick="App.dev.goto('settings')">Settings</button>
+        <button class="dev-btn" onclick="App.dev.goto('privacy')">Privacy</button>
         <button class="dev-btn dev-danger" onclick="App.dev.goto('crisis')">Crisis View</button>
+        <button class="dev-btn" onclick="App.dev.goto('notification')">Push Notification</button>
       </div>
 
       <div class="dev-section">
