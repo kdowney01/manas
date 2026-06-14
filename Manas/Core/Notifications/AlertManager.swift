@@ -125,15 +125,19 @@ final class AlertManager: NSObject, ObservableObject {
 // MARK: - UNUserNotificationCenterDelegate
 
 extension AlertManager: UNUserNotificationCenterDelegate {
+    // Delegate callbacks arrive off the main actor and touch no main-actor state
+    // here (one returns presentation options, the other only logs), so they are
+    // nonisolated — which also avoids sending non-Sendable UN* types across actors.
+
     // Show banners even while app is foregrounded
-    func userNotificationCenter(
+    nonisolated func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {
         [.banner, .sound]
     }
 
-    func userNotificationCenter(
+    nonisolated func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse
     ) async {

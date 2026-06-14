@@ -25,7 +25,8 @@ final class BackendService: NSObject, ObservableObject {
     @Published private(set) var isConnected     = false
     @Published private(set) var isAuthenticated = false
 
-    private let config = AppConfig.shared
+    // Immutable, Sendable config — readable from the nonisolated URLSession delegate.
+    private nonisolated let config = AppConfig.shared
     private var jwt: String? {
         get { try? SecureStorage.shared.loadString(key: SecureStorage.Keys.jwtToken.rawValue) }
         set {
@@ -204,7 +205,9 @@ final class BackendService: NSObject, ObservableObject {
 // Then add the intermediate hash to ManasDev.plist as MAANAS_PIN_HASH.
 
 extension BackendService: URLSessionDelegate {
-    func urlSession(
+    // Cert-pinning runs on the URLSession delegate queue (off the main actor) and
+    // reads only immutable `config`, so it is nonisolated.
+    nonisolated func urlSession(
         _ session: URLSession,
         didReceive challenge: URLAuthenticationChallenge,
         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void

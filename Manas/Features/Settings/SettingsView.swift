@@ -4,6 +4,7 @@ struct SettingsView: View {
     @EnvironmentObject var contactStore: EmergencyContactStore
     @EnvironmentObject var healthKitManager: HealthKitManager
     @EnvironmentObject var alertManager: AlertManager
+    @EnvironmentObject var riskEngine: RiskScoringEngine
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @State private var showAddContact = false
     @State private var showDeleteConfirmation = false
@@ -15,6 +16,7 @@ struct SettingsView: View {
             List {
                 emergencyContactsSection
                 notificationsSection
+                wellbeingScoreSection
                 privacySection
                 dataSection
                 aboutSection
@@ -91,6 +93,20 @@ struct SettingsView: View {
                 }
                 .foregroundStyle(.manasPrimary)
             }
+        }
+    }
+
+    private var wellbeingScoreSection: some View {
+        Section {
+            Picker("Overall score method", selection: $riskEngine.scoreMethod) {
+                ForEach(ScoreMethod.allCases) { method in
+                    Text(method.label).tag(method)
+                }
+            }
+        } header: {
+            Text("Wellbeing Score")
+        } footer: {
+            Text(riskEngine.scoreMethod.blurb)
         }
     }
 

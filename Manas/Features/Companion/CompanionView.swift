@@ -116,7 +116,13 @@ struct CompanionView: View {
                 .padding(.vertical, 12)
             }
             .onChange(of: service.messages.count) { _, _ in
-                withAnimation { proxy.scrollTo(service.isLoading ? "typing" : service.messages.last?.id) }
+                withAnimation {
+                    if service.isLoading {
+                        proxy.scrollTo("typing")
+                    } else if let lastID = service.messages.last?.id {
+                        proxy.scrollTo(lastID)
+                    }
+                }
             }
             .onChange(of: service.isLoading) { _, loading in
                 if loading { withAnimation { proxy.scrollTo("typing") } }

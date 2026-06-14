@@ -3,17 +3,20 @@ import SwiftUI
 // MARK: - MANAS Brand Palette
 // Source: MANAS Branding Guidelines (Impact Project Problem Statement deck)
 
-extension Color {
+// Defined on `ShapeStyle where Self == Color` so the tokens work in leading-dot
+// ShapeStyle positions (`.foregroundStyle(.manasPrimary)`, `.tint`, `.background`,
+// `.fill`) as well as plain `Color.manasPrimary` value contexts.
+extension ShapeStyle where Self == Color {
     /// Indigo Blue #5c6cb3 — trust, calm focus, reliability. Primary action color.
-    static let manasPrimary    = Color(red: 92/255,  green: 108/255, blue: 179/255)
+    static var manasPrimary: Color    { Color(red: 92/255,  green: 108/255, blue: 179/255) }
     /// Lavender Purple #ad6cad — compassion, creativity, emotional balance.
-    static let manasSecondary  = Color(red: 173/255, green: 108/255, blue: 173/255)
+    static var manasSecondary: Color  { Color(red: 173/255, green: 108/255, blue: 173/255) }
     /// Soft Mint #a8e6cf — freshness, growth, positivity.
-    static let manasMint       = Color(red: 168/255, green: 230/255, blue: 207/255)
+    static var manasMint: Color       { Color(red: 168/255, green: 230/255, blue: 207/255) }
     /// Warm Peach #ffb397 — empathy, warmth, approachability.
-    static let manasPeach      = Color(red: 255/255, green: 179/255, blue: 151/255)
+    static var manasPeach: Color      { Color(red: 255/255, green: 179/255, blue: 151/255) }
     /// Cool Gray #f4f4f7 — clean neutral base.
-    static let manasBackground = Color(red: 244/255, green: 244/255, blue: 247/255)
+    static var manasBackground: Color { Color(red: 244/255, green: 244/255, blue: 247/255) }
 }
 
 // MARK: - Risk Severity Colors

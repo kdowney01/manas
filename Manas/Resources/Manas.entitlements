@@ -2,17 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- HealthKit -->
+	<key>com.apple.developer.family-controls</key>
+	<true/>
 	<key>com.apple.developer.healthkit</key>
 	<true/>
 	<key>com.apple.developer.healthkit.background-delivery</key>
-	<true/>
-
-	<!-- Screen Time / DeviceActivity
-	     Requires Apple approval: apple.com/contact/request/family-controls-distribution
-	     Submit request, then enable this entitlement in your App ID on developer.apple.com.
-	     The DeviceActivityMonitor class stubs activation until this entitlement is provisioned. -->
-	<key>com.apple.developer.family-controls</key>
 	<true/>
 </dict>
 </plist>

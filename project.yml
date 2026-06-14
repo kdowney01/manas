@@ -30,6 +30,9 @@ targets:
       properties:
         com.apple.developer.healthkit: true
         com.apple.developer.healthkit.background-delivery: true
+        # Screen Time / DeviceActivity (ADR-004). Requires Apple approval:
+        # apple.com/contact/request/family-controls-distribution
+        com.apple.developer.family-controls: true
     dependencies: []
 
 schemes:

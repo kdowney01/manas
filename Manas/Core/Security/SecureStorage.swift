@@ -9,7 +9,9 @@ import OSLog
 
 private let log = Logger(subsystem: "com.manas.app", category: "SecureStorage")
 
-final class SecureStorage {
+// Stateless Keychain wrapper — no mutable instance state, so it is safe to share
+// across actors. The explicit Sendable conformance makes `shared` concurrency-safe.
+final class SecureStorage: Sendable {
     static let shared = SecureStorage()
     private init() {}
 

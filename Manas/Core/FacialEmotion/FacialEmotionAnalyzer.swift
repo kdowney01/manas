@@ -3,6 +3,7 @@ import Vision
 import CoreML
 import Combine
 import OSLog
+import UIKit
 
 private let log = Logger(subsystem: "com.manas.app", category: "FacialEmotion")
 
@@ -38,13 +39,17 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
     private var captureSession: AVCaptureSession?
     private let videoOutput    = AVCaptureVideoDataOutput()
     private let visionQueue    = DispatchQueue(label: "com.manas.vision", qos: .userInitiated)
-    private let facsEngine     = FACSRuleEngine()
-    private var coreMLModel:     VNCoreMLModel?
-    private var emotionSession   = EmotionSession()
+    // These are touched only on the serial vision queue (the capture delegate runs
+    // there), so nonisolated(unsafe) keeps the heavy Vision/CoreML work off the main
+    // actor without a data race. Published state is updated via @MainActor tasks.
+    nonisolated(unsafe) private let facsEngine = FACSRuleEngine()
+    nonisolated(unsafe) private var coreMLModel: VNCoreMLModel?
+    private var emotionSession = EmotionSession()   // main-actor; mutated only inside @MainActor tasks
 
     // Throttle: process every Nth frame to stay within 100ms budget (NFR-2).
-    private var frameCount = 0
-    private let frameSkip  = 2   // process every 3rd frame at 30 FPS → ~10 inferences/sec
+    nonisolated(unsafe) private var frameCount = 0
+    private nonisolated let frameSkip = 2   // process every 3rd frame at 30 FPS → ~10 inferences/sec
+    nonisolated(unsafe) private var lastReliability: Float = 0   // FACS reliability handed to the CoreML weighting
 
     override init() {
         super.init()
@@ -97,8 +102,11 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
 
         captureSession = session
 
-        // Run capture on a background thread to avoid blocking the main actor
-        Task.detached(priority: .userInitiated) { session.startRunning() }
+        // startRunning() blocks, so run it off the main actor. AVCaptureSession is
+        // safe to start from another thread; the unsafe opt-out is just to hand the
+        // non-Sendable session to the detached task.
+        nonisolated(unsafe) let capture = session
+        Task.detached(priority: .userInitiated) { capture.startRunning() }
 
         isActive = true
         log.info("FacialEmotionAnalyzer started (CoreML: \(self.coreMLModel != nil ? "loaded" : "FACS-only", privacy: .public))")
@@ -122,7 +130,7 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
 
     // MARK: - Vision pipeline
 
-    private func analyze(sampleBuffer: CMSampleBuffer) {
+    nonisolated private func analyze(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
         frameCount += 1
@@ -145,7 +153,7 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
         try? handler.perform(requests)
     }
 
-    private func handleLandmarks(_ request: VNRequest, error: Error?, pixelBuffer: CVPixelBuffer) {
+    nonisolated private func handleLandmarks(_ request: VNRequest, error: Error?, pixelBuffer: CVPixelBuffer) {
         guard error == nil,
               let obs = request.results?.first as? VNFaceObservation,
               let landmarks = obs.landmarks else {
@@ -155,6 +163,7 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
 
         let reliability = computeReliability(pixelBuffer: pixelBuffer, faceBox: obs.boundingBox)
         let facsVector  = facsEngine.evaluate(landmarks: landmarks, boundingBox: obs.boundingBox)
+        lastReliability = reliability
 
         Task { @MainActor in
             self.faceDetected      = true
@@ -170,7 +179,7 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
         }
     }
 
-    private func handleCoreMLResult(_ request: VNRequest, error: Error?) {
+    nonisolated private func handleCoreMLResult(_ request: VNRequest, error: Error?) {
         guard error == nil,
               let obs = request.results?.first as? VNClassificationObservation else { return }
 
@@ -191,7 +200,7 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
         }
 
         _ = obs  // suppress unused warning
-        let reliability = frameReliability
+        let reliability = lastReliability
 
         Task { @MainActor in
             self.emotionSession.append(EmotionFrameResult(
@@ -209,7 +218,7 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
     // Mirrors MAANAS neural_emotion_head.py estimate_confidence():
     // Rel = 0.4·Blur + 0.3·Scale + 0.3·Contrast
 
-    private func computeReliability(pixelBuffer: CVPixelBuffer, faceBox: CGRect) -> Float {
+    nonisolated private func computeReliability(pixelBuffer: CVPixelBuffer, faceBox: CGRect) -> Float {
         let scaleIndex    = min(Float(faceBox.width * faceBox.height) / (200 * 200), 1.0)
         // Blur and contrast require locking the pixel buffer — approximate with scale only
         // for perf. A more accurate version can lock the buffer and compute Laplacian.
@@ -219,14 +228,17 @@ final class FacialEmotionAnalyzer: NSObject, ObservableObject {
     // MARK: - App lifecycle: stop when backgrounded
 
     private func observeAppLifecycle() {
+        // Observers are delivered on the main queue, so it's safe to assert main-actor
+        // isolation to reach `stop()`.
         NotificationCenter.default.addObserver(
             forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main
-        ) { [weak self] _ in self?.stop() }
+        ) { [weak self] _ in
+            MainActor.assumeIsolated { self?.stop() }
+        }
         NotificationCenter.default.addObserver(
             forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main
-        ) { [weak self] _ in
-            guard self?.isActive == false else { return }
-            // Don't auto-restart; caller decides when to resume
+        ) { _ in
+            // Don't auto-restart on foreground; the caller decides when to resume.
         }
     }
 }
@@ -239,6 +251,8 @@ extension FacialEmotionAnalyzer: AVCaptureVideoDataOutputSampleBufferDelegate {
         didOutput sampleBuffer: CMSampleBuffer,
         from connection: AVCaptureConnection
     ) {
+        // Runs on the background vision queue; the analysis pipeline is nonisolated
+        // and hops to the main actor only to publish derived results.
         analyze(sampleBuffer: sampleBuffer)
     }
 }

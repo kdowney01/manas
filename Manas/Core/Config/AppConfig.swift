@@ -10,7 +10,9 @@ import Foundation
 // To set a local override: copy ManasDev.plist.template → ManasDev.plist
 // and add it to the Xcode target (do NOT commit it).
 
-enum Environment: String {
+// Renamed from `Environment` to avoid shadowing SwiftUI's `@Environment` property
+// wrapper, which is referenced unqualified throughout the feature views.
+enum AppEnvironment: String {
     case development = "development"
     case staging     = "staging"
     case production  = "production"
@@ -19,7 +21,7 @@ enum Environment: String {
 struct AppConfig {
     static let shared = AppConfig()
 
-    let environment: Environment
+    let environment: AppEnvironment
     let apiBaseURL: URL
     let webSocketURL: URL
     let tlsPinnedHashes: [String]   // SHA-256 of server public key(s), base64-encoded
@@ -29,7 +31,7 @@ struct AppConfig {
     private init() {
         let plist   = Self.loadDevPlist()
         let env     = Self.resolve("MAANAS_ENV", plist: plist, default: "production")
-        environment = Environment(rawValue: env) ?? .production
+        environment = AppEnvironment(rawValue: env) ?? .production
 
         let apiString = Self.resolve(
             "MAANAS_API_URL", plist: plist,

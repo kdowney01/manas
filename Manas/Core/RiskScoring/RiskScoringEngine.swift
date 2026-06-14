@@ -10,6 +10,16 @@ final class RiskScoringEngine: ObservableObject {
     @Published var currentScore: Double = 0.0
     @Published var recentEvents: [RiskEvent] = []
     @Published var userProfile = UserProfile()
+    @Published private(set) var latestSnapshot: BiometricSnapshot?
+
+    /// How the Overall wellbeing score combines Physio + Digital. UI preference
+    /// (not PHI), so UserDefaults-backed persistence is acceptable here.
+    @Published var scoreMethod: ScoreMethod = {
+        let raw = UserDefaults.standard.string(forKey: "overallScoreMethod") ?? ""
+        return ScoreMethod(rawValue: raw) ?? .lowestPullsDown
+    }() {
+        didSet { UserDefaults.standard.set(scoreMethod.rawValue, forKey: "overallScoreMethod") }
+    }
 
     private var snapshotHistory: [BiometricSnapshot] = []
     private let alertManager = AlertManager.shared
@@ -18,6 +28,7 @@ final class RiskScoringEngine: ObservableObject {
     func process(_ snapshot: BiometricSnapshot) {
         snapshotHistory.append(snapshot)
         if snapshotHistory.count > 7 * 24 { snapshotHistory.removeFirst() }
+        latestSnapshot = snapshot
 
         if !userProfile.calibrationComplete {
             userProfile.calibrationSampleCount += 1
@@ -128,4 +139,76 @@ final class RiskScoringEngine: ObservableObject {
         guard !recent.isEmpty else { return nil }
         return Double(recent.reduce(0, +)) / Double(recent.count)
     }
+
+    // MARK: - Wellbeing (display layer)
+    // Positive 0–100 framing of the underlying risk, split into domains for the
+    // dashboard. Alerting stays driven by the risk pipeline above — never by these.
+
+    /// Physio wellbeing (0–100, higher = better) — inverse of the physiologic risk.
+    /// Shows 100 until calibration completes (UI shows the calibrating state instead).
+    var physioWellbeing: Int {
+        guard userProfile.calibrationComplete else { return 100 }
+        return Int(((1.0 - currentScore) * 100).rounded())
+    }
+
+    /// Digital wellbeing (0–100) if digital signals are enabled; nil otherwise.
+    /// Wired in Phase 2 — nil for now, so the Digital domain reads "not set up".
+    var digitalWellbeing: Int? { nil }
+
+    /// Overall wellbeing — Physio + Digital combined via the selected method.
+    var overallWellbeing: Int {
+        scoreMethod.combine(physio: physioWellbeing, digital: digitalWellbeing)
+    }
+
+    /// Per-signal OK/Watch status for the Physio detail screen, from the latest
+    /// snapshot vs. the calibrated thresholds (same checks as `activeTriggers`).
+    func physioSignals() -> [SignalStatus] {
+        guard let s = latestSnapshot else { return [] }
+        let t = userProfile.riskThresholds
+        var out: [SignalStatus] = []
+        if let hr = s.heartRate {
+            out.append(SignalStatus(systemImage: "heart.fill", label: "Heart Rate",
+                                    value: "\(Int(hr)) BPM", isGood: hr <= t.highHR))
+        }
+        if let hrv = s.hrv {
+            out.append(SignalStatus(systemImage: "waveform.path.ecg", label: "HRV",
+                                    value: "\(Int(hrv)) ms", isGood: hrv >= t.lowHRV))
+        }
+        if let sleep = s.sleepHours {
+            out.append(SignalStatus(systemImage: "moon.fill", label: "Sleep",
+                                    value: String(format: "%.1fh", sleep), isGood: sleep >= t.minSleepHours))
+        }
+        if let steps = s.stepCount {
+            out.append(SignalStatus(systemImage: "figure.walk", label: "Steps",
+                                    value: "\(steps)", isGood: steps >= 5000))
+        }
+        return out
+    }
 }
+
+#if DEBUG
+extension RiskScoringEngine {
+    /// A calibrated engine seeded with sample data, for SwiftUI previews/canvas.
+    /// Same-file access lets us set the `private(set)` snapshot directly.
+    static func preview() -> RiskScoringEngine {
+        let engine = RiskScoringEngine()
+        engine.userProfile.calibrationComplete = true
+        engine.currentScore = 0.22
+        engine.currentRisk  = .low
+        engine.latestSnapshot = BiometricSnapshot(
+            heartRate: 72, hrv: 48, sleepHours: 5.4, stepCount: 6421
+        )
+        engine.recentEvents = [
+            RiskEvent(timestamp: Date().addingTimeInterval(-2 * 86_400),
+                      severity: .moderate,
+                      triggerSignals: ["Low HRV", "Insufficient sleep"],
+                      riskScore: 0.42),
+            RiskEvent(timestamp: Date().addingTimeInterval(-5 * 86_400),
+                      severity: .low,
+                      triggerSignals: ["Elevated heart rate"],
+                      riskScore: 0.28),
+        ]
+        return engine
+    }
+}
+#endif

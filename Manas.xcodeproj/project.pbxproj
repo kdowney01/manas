@@ -7,95 +7,85 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		/* ── Existing Swift sources ── */
+		169F4B8DA9C61EBEE368E10A /* ScoreComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DF5F1815ACDF805A40306 /* ScoreComponents.swift */; };
+		17432B609A670A52D6078130 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA5F4ECCDDC5C2BF379A725 /* AlertManager.swift */; };
 		1EAA91C92277C7BCC241DE06 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362FF0204142F0E5F5BF13D1 /* OnboardingView.swift */; };
 		278F0A6F8BF6E91AD9731D40 /* RiskEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B257433A8644BB583BBCED5 /* RiskEvent.swift */; };
+		2D664A54CA54A2E18B7E8B4A /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A0D6794142043540B7E59A /* SecureStorage.swift */; };
+		2D996B00E0BCF2112FDBB149 /* FacialEmotionAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647717D8198CB37A7328645E /* FacialEmotionAnalyzer.swift */; };
+		4CBAD6090A9619A1F90A8375 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E192E2C1F9C3702132CCC9 /* SettingsView.swift */; };
 		4D5F991CF9810B5B77849D50 /* RiskScoringEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D9FD96E4B94928177DC242 /* RiskScoringEngine.swift */; };
+		58AEDD25490262123DECA685 /* WellbeingDetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51807B4B04FDA5FC45A9363C /* WellbeingDetailViews.swift */; };
+		6796421E4E312B956D3D57EF /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99B45C4339441723D5C13BF9 /* Montserrat-Bold.ttf */; };
 		6B6546BA7CA97B37A247E33A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E313781DEB282C5579A40 /* DashboardView.swift */; };
+		72EC0C7E435964F5D05E8375 /* DeviceActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E90CA822DAA915C32E1B9CE /* DeviceActivityMonitor.swift */; };
+		7BA3B54B432C033975689B0A /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E773B0BFDCC0D171316F039 /* Montserrat-Medium.ttf */; };
+		8DEDCCD4A15315B747779FC1 /* manas-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 307166E4BE0675EBC49FEB46 /* manas-logo.svg */; };
+		983CFB1F7E438C97CF536E36 /* FACSRuleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07738F039B831F3FDB18728E /* FACSRuleEngine.swift */; };
+		9F318E711496FC8047BB9F88 /* manas_logo_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = A760E19199DFC9D49EA6AEBE /* manas_logo_sm.png */; };
+		A0AEA213929E6EEBF9D4A5BA /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB8520CCDE0DCC7EF5E1A3 /* Typography.swift */; };
+		A559E39E3625F914EE14E116 /* BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9665D672EBDF1B1BC6BC5A86 /* BrandColors.swift */; };
+		A715E180F416334DFC731F90 /* manas_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 955CFEAB9319790253B59121 /* manas_logo.png */; };
+		A8722E6CF6B8940531F21B89 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7D6AADDF6ECC19D65AC4706 /* Montserrat-SemiBold.ttf */; };
+		AF8F2423C4941B90622E9308 /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF1822684E67778EBDCDAFB /* BackendService.swift */; };
+		B226A0C5608BAEF16736EDF2 /* EmergencyContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7520AA943382FC3183E97F /* EmergencyContact.swift */; };
 		B7EFD42AEE5F55EAE39C9FEA /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C97D72C0EA8F1417E424D21 /* UserProfile.swift */; };
+		BD97628AFB647FC6C112AB7C /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B29E0538E0C070E56357CC4 /* Montserrat-Regular.ttf */; };
 		C21CB3D5C80996BEB0942DD4 /* ManasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9F42A5FFEC739EC8ACFF7 /* ManasApp.swift */; };
+		C712BB90BB86F10BCACEE302 /* WellbeingScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D44B1DC771093CE43681C /* WellbeingScore.swift */; };
 		CBB19D052D465937E2EEBAD7 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F70312B4EAA6F304143DCF /* HealthKitManager.swift */; };
+		CDD4EE8AC18E68C2DC366690 /* EmotionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099FF0F13F43B7627C63B4A3 /* EmotionResult.swift */; };
 		D0843CAE4552E09919E5879C /* BiometricSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7FD0AB87315CA4101C604F /* BiometricSnapshot.swift */; };
+		D289DFF3F182AF607AA29492 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441C16CC4B499D6344BBB19D /* Montserrat-ExtraBold.ttf */; };
+		E27F82229D9A9895D8006C05 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966231965A913FC7D9CF0E5C /* AppConfig.swift */; };
 		E416E215D67CF42C1376FAC8 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686A520A1C8897C96DBF62E6 /* RootView.swift */; };
-		/* ── New Swift sources (design system) ── */
-		BB01000000000000000000001 /* BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01000000000000000000001 /* BrandColors.swift */; };
-		BB02000000000000000000002 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA02000000000000000000002 /* Typography.swift */; };
-		/* ── New Swift sources (security) ── */
-		BB03000000000000000000003 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA03000000000000000000003 /* SecureStorage.swift */; };
-		/* ── New Swift sources (models) ── */
-		BB04000000000000000000004 /* EmergencyContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA04000000000000000000004 /* EmergencyContact.swift */; };
-		/* ── New Swift sources (notifications) ── */
-		BB05000000000000000000005 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA05000000000000000000005 /* AlertManager.swift */; };
-		/* ── New Swift sources (backend) ── */
-		BB06000000000000000000006 /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06000000000000000000006 /* BackendService.swift */; };
-		/* ── New Swift sources (AI) ── */
-		BB07000000000000000000007 /* CompanionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA07000000000000000000007 /* CompanionService.swift */; };
-		/* ── New Swift sources (device activity) ── */
-		BB08000000000000000000008 /* DeviceActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA08000000000000000000008 /* DeviceActivityMonitor.swift */; };
-		/* ── New Swift sources (features) ── */
-		BB09000000000000000000009 /* CompanionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09000000000000000000009 /* CompanionView.swift */; };
-		BB10000000000000000000010 /* CrisisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA10000000000000000000010 /* CrisisView.swift */; };
-		BB11000000000000000000011 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11000000000000000000011 /* SettingsView.swift */; };
-		/* ── New Swift sources (config) ── */
-		BB12000000000000000000012 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12000000000000000000012 /* AppConfig.swift */; };
-		/* ── New Swift sources (facial emotion) ── */
-		BB13000000000000000000013 /* EmotionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA13000000000000000000013 /* EmotionResult.swift */; };
-		BB14000000000000000000014 /* FACSRuleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA14000000000000000000014 /* FACSRuleEngine.swift */; };
-		BB15000000000000000000015 /* FacialEmotionAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA15000000000000000000015 /* FacialEmotionAnalyzer.swift */; };
-		/* ── Font resources ── */
-		CC16000000000000000000016 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA16000000000000000000016 /* Montserrat-Regular.ttf */; };
-		CC17000000000000000000017 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA17000000000000000000017 /* Montserrat-Medium.ttf */; };
-		CC18000000000000000000018 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA18000000000000000000018 /* Montserrat-SemiBold.ttf */; };
-		CC19000000000000000000019 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA19000000000000000000019 /* Montserrat-Bold.ttf */; };
-		CC20000000000000000000020 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000000000000020 /* Montserrat-ExtraBold.ttf */; };
-		/* ── Logo assets ── */
-		CC21000000000000000000021 /* manas_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AA21000000000000000000021 /* manas_logo.png */; };
-		CC22000000000000000000022 /* manas_logo_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = AA22000000000000000000022 /* manas_logo_sm.png */; };
+		F10A4A182B7EEC39909F96F0 /* CompanionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3456C43933E4A2077F77663E /* CompanionView.swift */; };
+		F99C5F6F2CB8B2564E76A59C /* CrisisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7489954D75D78E1DE9A19EC0 /* CrisisView.swift */; };
+		FC94EC6B9A4988B6C05C2A52 /* CompanionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438DDBDAE18CC3C3F7344282 /* CompanionService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		/* ── Existing ── */
+		07738F039B831F3FDB18728E /* FACSRuleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FACSRuleEngine.swift; sourceTree = "<group>"; };
+		099FF0F13F43B7627C63B4A3 /* EmotionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionResult.swift; sourceTree = "<group>"; };
+		0E2D44B1DC771093CE43681C /* WellbeingScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellbeingScore.swift; sourceTree = "<group>"; };
 		105438494247D1F853B4A8B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		16D9FD96E4B94928177DC242 /* RiskScoringEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskScoringEngine.swift; sourceTree = "<group>"; };
+		1BA5F4ECCDDC5C2BF379A725 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		307166E4BE0675EBC49FEB46 /* manas-logo.svg */ = {isa = PBXFileReference; path = "manas-logo.svg"; sourceTree = "<group>"; };
+		3456C43933E4A2077F77663E /* CompanionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionView.swift; sourceTree = "<group>"; };
 		362FF0204142F0E5F5BF13D1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		3C7520AA943382FC3183E97F /* EmergencyContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContact.swift; sourceTree = "<group>"; };
 		3C97D72C0EA8F1417E424D21 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		3E90CA822DAA915C32E1B9CE /* DeviceActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitor.swift; sourceTree = "<group>"; };
+		438DDBDAE18CC3C3F7344282 /* CompanionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionService.swift; sourceTree = "<group>"; };
+		441C16CC4B499D6344BBB19D /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
+		4E773B0BFDCC0D171316F039 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		51807B4B04FDA5FC45A9363C /* WellbeingDetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellbeingDetailViews.swift; sourceTree = "<group>"; };
+		5CF1822684E67778EBDCDAFB /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
+		647717D8198CB37A7328645E /* FacialEmotionAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacialEmotionAnalyzer.swift; sourceTree = "<group>"; };
 		686A520A1C8897C96DBF62E6 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		7489954D75D78E1DE9A19EC0 /* CrisisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrisisView.swift; sourceTree = "<group>"; };
 		80F70312B4EAA6F304143DCF /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		85AB8520CCDE0DCC7EF5E1A3 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		8B257433A8644BB583BBCED5 /* RiskEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskEvent.swift; sourceTree = "<group>"; };
+		8B29E0538E0C070E56357CC4 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		955CFEAB9319790253B59121 /* manas_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manas_logo.png; sourceTree = "<group>"; };
+		966231965A913FC7D9CF0E5C /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		9665D672EBDF1B1BC6BC5A86 /* BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColors.swift; sourceTree = "<group>"; };
+		999DF5F1815ACDF805A40306 /* ScoreComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreComponents.swift; sourceTree = "<group>"; };
+		99B45C4339441723D5C13BF9 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		9DD9F42A5FFEC739EC8ACFF7 /* ManasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManasApp.swift; sourceTree = "<group>"; };
+		A0E192E2C1F9C3702132CCC9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A44E313781DEB282C5579A40 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		A760E19199DFC9D49EA6AEBE /* manas_logo_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manas_logo_sm.png; sourceTree = "<group>"; };
+		B8A0D6794142043540B7E59A /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
 		D3CED9ADC89676DBAB445947 /* Manas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Manas.entitlements; sourceTree = "<group>"; };
 		D68123675F7A3FD6C9712A07 /* Manas.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Manas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE7FD0AB87315CA4101C604F /* BiometricSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricSnapshot.swift; sourceTree = "<group>"; };
-		/* ── New Swift sources ── */
-		AA01000000000000000000001 /* BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColors.swift; sourceTree = "<group>"; };
-		AA02000000000000000000002 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
-		AA03000000000000000000003 /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
-		AA04000000000000000000004 /* EmergencyContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContact.swift; sourceTree = "<group>"; };
-		AA05000000000000000000005 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
-		AA06000000000000000000006 /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
-		AA07000000000000000000007 /* CompanionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionService.swift; sourceTree = "<group>"; };
-		AA08000000000000000000008 /* DeviceActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitor.swift; sourceTree = "<group>"; };
-		AA09000000000000000000009 /* CompanionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionView.swift; sourceTree = "<group>"; };
-		AA10000000000000000000010 /* CrisisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrisisView.swift; sourceTree = "<group>"; };
-		AA11000000000000000000011 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		AA12000000000000000000012 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
-		AA13000000000000000000013 /* EmotionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionResult.swift; sourceTree = "<group>"; };
-		AA14000000000000000000014 /* FACSRuleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FACSRuleEngine.swift; sourceTree = "<group>"; };
-		AA15000000000000000000015 /* FacialEmotionAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacialEmotionAnalyzer.swift; sourceTree = "<group>"; };
-		/* ── Fonts ── */
-		AA16000000000000000000016 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		AA17000000000000000000017 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
-		AA18000000000000000000018 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
-		AA19000000000000000000019 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
-		AA20000000000000000000020 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
-		/* ── Assets ── */
-		AA21000000000000000000021 /* manas_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manas_logo.png; sourceTree = "<group>"; };
-		AA22000000000000000000022 /* manas_logo_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manas_logo_sm.png; sourceTree = "<group>"; };
+		F7D6AADDF6ECC19D65AC4706 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		/* ── Core subgroups ── */
 		0C6DF54F25AA8F3C2382E226 /* HealthKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,120 +94,6 @@
 			path = HealthKit;
 			sourceTree = "<group>";
 		};
-		DD01000000000000000000001 /* DesignSystem */ = {
-			isa = PBXGroup;
-			children = (
-				AA01000000000000000000001 /* BrandColors.swift */,
-				AA02000000000000000000002 /* Typography.swift */,
-			);
-			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		DD02000000000000000000002 /* Security */ = {
-			isa = PBXGroup;
-			children = (
-				AA03000000000000000000003 /* SecureStorage.swift */,
-			);
-			path = Security;
-			sourceTree = "<group>";
-		};
-		DD03000000000000000000003 /* Notifications */ = {
-			isa = PBXGroup;
-			children = (
-				AA05000000000000000000005 /* AlertManager.swift */,
-			);
-			path = Notifications;
-			sourceTree = "<group>";
-		};
-		DD04000000000000000000004 /* Backend */ = {
-			isa = PBXGroup;
-			children = (
-				AA06000000000000000000006 /* BackendService.swift */,
-			);
-			path = Backend;
-			sourceTree = "<group>";
-		};
-		DD05000000000000000000005 /* AI */ = {
-			isa = PBXGroup;
-			children = (
-				AA07000000000000000000007 /* CompanionService.swift */,
-			);
-			path = AI;
-			sourceTree = "<group>";
-		};
-		DD06000000000000000000006 /* DeviceActivity */ = {
-			isa = PBXGroup;
-			children = (
-				AA08000000000000000000008 /* DeviceActivityMonitor.swift */,
-			);
-			path = DeviceActivity;
-			sourceTree = "<group>";
-		};
-		DD07000000000000000000007 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				AA12000000000000000000012 /* AppConfig.swift */,
-			);
-			path = Config;
-			sourceTree = "<group>";
-		};
-		DD08000000000000000000008 /* FacialEmotion */ = {
-			isa = PBXGroup;
-			children = (
-				AA13000000000000000000013 /* EmotionResult.swift */,
-				AA14000000000000000000014 /* FACSRuleEngine.swift */,
-				AA15000000000000000000015 /* FacialEmotionAnalyzer.swift */,
-			);
-			path = FacialEmotion;
-			sourceTree = "<group>";
-		};
-		/* ── Feature subgroups ── */
-		DD09000000000000000000009 /* Crisis */ = {
-			isa = PBXGroup;
-			children = (
-				AA10000000000000000000010 /* CrisisView.swift */,
-			);
-			path = Crisis;
-			sourceTree = "<group>";
-		};
-		DD10000000000000000000010 /* Companion */ = {
-			isa = PBXGroup;
-			children = (
-				AA09000000000000000000009 /* CompanionView.swift */,
-			);
-			path = Companion;
-			sourceTree = "<group>";
-		};
-		DD11000000000000000000011 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				AA11000000000000000000011 /* SettingsView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		/* ── Resource subgroups ── */
-		DD12000000000000000000012 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				AA16000000000000000000016 /* Montserrat-Regular.ttf */,
-				AA17000000000000000000017 /* Montserrat-Medium.ttf */,
-				AA18000000000000000000018 /* Montserrat-SemiBold.ttf */,
-				AA19000000000000000000019 /* Montserrat-Bold.ttf */,
-				AA20000000000000000000020 /* Montserrat-ExtraBold.ttf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
-		DD13000000000000000000013 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				AA21000000000000000000021 /* manas_logo.png */,
-			);
-			path = Assets;
-			sourceTree = "<group>";
-		};
-		/* ── Top-level groups ── */
 		0CCD8603F15D9982093C4B48 = {
 			isa = PBXGroup;
 			children = (
@@ -230,12 +106,22 @@
 			isa = PBXGroup;
 			children = (
 				105438494247D1F853B4A8B7 /* Info.plist */,
+				A760E19199DFC9D49EA6AEBE /* manas_logo_sm.png */,
 				D3CED9ADC89676DBAB445947 /* Manas.entitlements */,
-				AA22000000000000000000022 /* manas_logo_sm.png */,
-				DD12000000000000000000012 /* Fonts */,
-				DD13000000000000000000013 /* Assets */,
+				C1D705ADB466A60F6493BD9B /* Assets */,
+				333F7096C16609682B1F8770 /* Fonts */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		22A0819A5C7D7D5F149DEFD5 /* FacialEmotion */ = {
+			isa = PBXGroup;
+			children = (
+				099FF0F13F43B7627C63B4A3 /* EmotionResult.swift */,
+				647717D8198CB37A7328645E /* FacialEmotionAnalyzer.swift */,
+				07738F039B831F3FDB18728E /* FACSRuleEngine.swift */,
+			);
+			path = FacialEmotion;
 			sourceTree = "<group>";
 		};
 		2D320F8BA178437D92248C6B /* App */ = {
@@ -247,6 +133,26 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		30906D42CD0566F34D4C4D5E /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				5CF1822684E67778EBDCDAFB /* BackendService.swift */,
+			);
+			path = Backend;
+			sourceTree = "<group>";
+		};
+		333F7096C16609682B1F8770 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				99B45C4339441723D5C13BF9 /* Montserrat-Bold.ttf */,
+				441C16CC4B499D6344BBB19D /* Montserrat-ExtraBold.ttf */,
+				4E773B0BFDCC0D171316F039 /* Montserrat-Medium.ttf */,
+				8B29E0538E0C070E56357CC4 /* Montserrat-Regular.ttf */,
+				F7D6AADDF6ECC19D65AC4706 /* Montserrat-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		341D8CDD7D7BB2528FC909EB /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,14 +160,30 @@
 			path = Infrastructure;
 			sourceTree = "<group>";
 		};
+		3975CB7BC86FC50EC1D700F5 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				966231965A913FC7D9CF0E5C /* AppConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		47B8005CD4C732D05A7B377E /* DeviceActivity */ = {
+			isa = PBXGroup;
+			children = (
+				3E90CA822DAA915C32E1B9CE /* DeviceActivityMonitor.swift */,
+			);
+			path = DeviceActivity;
+			sourceTree = "<group>";
+		};
 		73B4ABBFF7C7A98AAE49A9D2 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				CE0CF46B3842BA6FF845A54A /* Companion */,
+				E1DF27F8943FF76057F3D480 /* Crisis */,
 				CA400EDFA380B4C1D9075324 /* Dashboard */,
 				CA157CCFEFF6DDB2AA3F97C0 /* Onboarding */,
-				DD09000000000000000000009 /* Crisis */,
-				DD10000000000000000000010 /* Companion */,
-				DD11000000000000000000011 /* Settings */,
+				B7F820371AAB035F6F2372B4 /* Settings */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -272,6 +194,47 @@
 				D68123675F7A3FD6C9712A07 /* Manas.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8C4D7DF6F11205001EBC3A9E /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				1BA5F4ECCDDC5C2BF379A725 /* AlertManager.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		B7F820371AAB035F6F2372B4 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A0E192E2C1F9C3702132CCC9 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		BAB39937FC7B62DE14458DFE /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				438DDBDAE18CC3C3F7344282 /* CompanionService.swift */,
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
+		C11FFFB3939F234A997BACE5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				999DF5F1815ACDF805A40306 /* ScoreComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		C1D705ADB466A60F6493BD9B /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				955CFEAB9319790253B59121 /* manas_logo.png */,
+				307166E4BE0675EBC49FEB46 /* manas-logo.svg */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		CA157CCFEFF6DDB2AA3F97C0 /* Onboarding */ = {
@@ -286,35 +249,61 @@
 			isa = PBXGroup;
 			children = (
 				A44E313781DEB282C5579A40 /* DashboardView.swift */,
+				51807B4B04FDA5FC45A9363C /* WellbeingDetailViews.swift */,
+				C11FFFB3939F234A997BACE5 /* Components */,
 			);
 			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		CE0CF46B3842BA6FF845A54A /* Companion */ = {
+			isa = PBXGroup;
+			children = (
+				3456C43933E4A2077F77663E /* CompanionView.swift */,
+			);
+			path = Companion;
+			sourceTree = "<group>";
+		};
+		D86211928E8EBB3EC4FBC419 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				B8A0D6794142043540B7E59A /* SecureStorage.swift */,
+			);
+			path = Security;
 			sourceTree = "<group>";
 		};
 		E14F20813B860E0CAE2AFD21 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				DE7FD0AB87315CA4101C604F /* BiometricSnapshot.swift */,
+				3C7520AA943382FC3183E97F /* EmergencyContact.swift */,
 				8B257433A8644BB583BBCED5 /* RiskEvent.swift */,
 				3C97D72C0EA8F1417E424D21 /* UserProfile.swift */,
-				AA04000000000000000000004 /* EmergencyContact.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E1DF27F8943FF76057F3D480 /* Crisis */ = {
+			isa = PBXGroup;
+			children = (
+				7489954D75D78E1DE9A19EC0 /* CrisisView.swift */,
+			);
+			path = Crisis;
 			sourceTree = "<group>";
 		};
 		E7ADE046142F3913A64FDE3B /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				DD01000000000000000000001 /* DesignSystem */,
-				DD02000000000000000000002 /* Security */,
-				DD03000000000000000000003 /* Notifications */,
-				DD04000000000000000000004 /* Backend */,
-				DD05000000000000000000005 /* AI */,
-				DD06000000000000000000006 /* DeviceActivity */,
-				DD07000000000000000000007 /* Config */,
-				DD08000000000000000000008 /* FacialEmotion */,
+				BAB39937FC7B62DE14458DFE /* AI */,
+				30906D42CD0566F34D4C4D5E /* Backend */,
+				3975CB7BC86FC50EC1D700F5 /* Config */,
+				ECE362C21FFB6B23938F3EE4 /* DesignSystem */,
+				47B8005CD4C732D05A7B377E /* DeviceActivity */,
+				22A0819A5C7D7D5F149DEFD5 /* FacialEmotion */,
 				0C6DF54F25AA8F3C2382E226 /* HealthKit */,
 				E14F20813B860E0CAE2AFD21 /* Models */,
+				8C4D7DF6F11205001EBC3A9E /* Notifications */,
 				F4C86B9C59B0D484A76AE184 /* RiskScoring */,
+				D86211928E8EBB3EC4FBC419 /* Security */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -331,10 +320,20 @@
 			path = Manas;
 			sourceTree = "<group>";
 		};
+		ECE362C21FFB6B23938F3EE4 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				9665D672EBDF1B1BC6BC5A86 /* BrandColors.swift */,
+				85AB8520CCDE0DCC7EF5E1A3 /* Typography.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		F4C86B9C59B0D484A76AE184 /* RiskScoring */ = {
 			isa = PBXGroup;
 			children = (
 				16D9FD96E4B94928177DC242 /* RiskScoringEngine.swift */,
+				0E2D44B1DC771093CE43681C /* WellbeingScore.swift */,
 			);
 			path = RiskScoring;
 			sourceTree = "<group>";
@@ -347,7 +346,7 @@
 			buildConfigurationList = C8AE4685C64EC9B056D35A0D /* Build configuration list for PBXNativeTarget "Manas" */;
 			buildPhases = (
 				A67EF169A6DCB56F98D88EBB /* Sources */,
-				EE01000000000000000000001 /* Resources */,
+				F40C6E6B9D18E58744669822 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -395,17 +394,18 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		EE01000000000000000000001 /* Resources */ = {
+		F40C6E6B9D18E58744669822 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC16000000000000000000016 /* Montserrat-Regular.ttf in Resources */,
-				CC17000000000000000000017 /* Montserrat-Medium.ttf in Resources */,
-				CC18000000000000000000018 /* Montserrat-SemiBold.ttf in Resources */,
-				CC19000000000000000000019 /* Montserrat-Bold.ttf in Resources */,
-				CC20000000000000000000020 /* Montserrat-ExtraBold.ttf in Resources */,
-				CC21000000000000000000021 /* manas_logo.png in Resources */,
-				CC22000000000000000000022 /* manas_logo_sm.png in Resources */,
+				6796421E4E312B956D3D57EF /* Montserrat-Bold.ttf in Resources */,
+				D289DFF3F182AF607AA29492 /* Montserrat-ExtraBold.ttf in Resources */,
+				7BA3B54B432C033975689B0A /* Montserrat-Medium.ttf in Resources */,
+				BD97628AFB647FC6C112AB7C /* Montserrat-Regular.ttf in Resources */,
+				A8722E6CF6B8940531F21B89 /* Montserrat-SemiBold.ttf in Resources */,
+				8DEDCCD4A15315B747779FC1 /* manas-logo.svg in Resources */,
+				A715E180F416334DFC731F90 /* manas_logo.png in Resources */,
+				9F318E711496FC8047BB9F88 /* manas_logo_sm.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,41 +416,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				/* ── Existing ── */
+				17432B609A670A52D6078130 /* AlertManager.swift in Sources */,
+				E27F82229D9A9895D8006C05 /* AppConfig.swift in Sources */,
+				AF8F2423C4941B90622E9308 /* BackendService.swift in Sources */,
 				D0843CAE4552E09919E5879C /* BiometricSnapshot.swift in Sources */,
+				A559E39E3625F914EE14E116 /* BrandColors.swift in Sources */,
+				FC94EC6B9A4988B6C05C2A52 /* CompanionService.swift in Sources */,
+				F10A4A182B7EEC39909F96F0 /* CompanionView.swift in Sources */,
+				F99C5F6F2CB8B2564E76A59C /* CrisisView.swift in Sources */,
 				6B6546BA7CA97B37A247E33A /* DashboardView.swift in Sources */,
+				72EC0C7E435964F5D05E8375 /* DeviceActivityMonitor.swift in Sources */,
+				B226A0C5608BAEF16736EDF2 /* EmergencyContact.swift in Sources */,
+				CDD4EE8AC18E68C2DC366690 /* EmotionResult.swift in Sources */,
+				983CFB1F7E438C97CF536E36 /* FACSRuleEngine.swift in Sources */,
+				2D996B00E0BCF2112FDBB149 /* FacialEmotionAnalyzer.swift in Sources */,
 				CBB19D052D465937E2EEBAD7 /* HealthKitManager.swift in Sources */,
 				C21CB3D5C80996BEB0942DD4 /* ManasApp.swift in Sources */,
 				1EAA91C92277C7BCC241DE06 /* OnboardingView.swift in Sources */,
 				278F0A6F8BF6E91AD9731D40 /* RiskEvent.swift in Sources */,
 				4D5F991CF9810B5B77849D50 /* RiskScoringEngine.swift in Sources */,
 				E416E215D67CF42C1376FAC8 /* RootView.swift in Sources */,
+				169F4B8DA9C61EBEE368E10A /* ScoreComponents.swift in Sources */,
+				2D664A54CA54A2E18B7E8B4A /* SecureStorage.swift in Sources */,
+				4CBAD6090A9619A1F90A8375 /* SettingsView.swift in Sources */,
+				A0AEA213929E6EEBF9D4A5BA /* Typography.swift in Sources */,
 				B7EFD42AEE5F55EAE39C9FEA /* UserProfile.swift in Sources */,
-				/* ── Design system ── */
-				BB01000000000000000000001 /* BrandColors.swift in Sources */,
-				BB02000000000000000000002 /* Typography.swift in Sources */,
-				/* ── Security ── */
-				BB03000000000000000000003 /* SecureStorage.swift in Sources */,
-				/* ── Models ── */
-				BB04000000000000000000004 /* EmergencyContact.swift in Sources */,
-				/* ── Notifications ── */
-				BB05000000000000000000005 /* AlertManager.swift in Sources */,
-				/* ── Backend ── */
-				BB06000000000000000000006 /* BackendService.swift in Sources */,
-				/* ── AI ── */
-				BB07000000000000000000007 /* CompanionService.swift in Sources */,
-				/* ── DeviceActivity ── */
-				BB08000000000000000000008 /* DeviceActivityMonitor.swift in Sources */,
-				/* ── Features ── */
-				BB09000000000000000000009 /* CompanionView.swift in Sources */,
-				BB10000000000000000000010 /* CrisisView.swift in Sources */,
-				BB11000000000000000000011 /* SettingsView.swift in Sources */,
-				/* ── Config ── */
-				BB12000000000000000000012 /* AppConfig.swift in Sources */,
-				/* ── Facial emotion ── */
-				BB13000000000000000000013 /* EmotionResult.swift in Sources */,
-				BB14000000000000000000014 /* FACSRuleEngine.swift in Sources */,
-				BB15000000000000000000015 /* FacialEmotionAnalyzer.swift in Sources */,
+				58AEDD25490262123DECA685 /* WellbeingDetailViews.swift in Sources */,
+				C712BB90BB86F10BCACEE302 /* WellbeingScore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
