@@ -167,19 +167,19 @@ final class RiskScoringEngine: ObservableObject {
         let t = userProfile.riskThresholds
         var out: [SignalStatus] = []
         if let hr = s.heartRate {
-            out.append(SignalStatus(systemImage: "heart.fill", label: "Heart Rate",
+            out.append(SignalStatus(emoji: "❤️", label: "Heart Rate",
                                     value: "\(Int(hr)) BPM", isGood: hr <= t.highHR))
         }
         if let hrv = s.hrv {
-            out.append(SignalStatus(systemImage: "waveform.path.ecg", label: "HRV",
+            out.append(SignalStatus(emoji: "〰️", label: "HRV",
                                     value: "\(Int(hrv)) ms", isGood: hrv >= t.lowHRV))
         }
         if let sleep = s.sleepHours {
-            out.append(SignalStatus(systemImage: "moon.fill", label: "Sleep",
+            out.append(SignalStatus(emoji: "🌙", label: "Sleep",
                                     value: String(format: "%.1fh", sleep), isGood: sleep >= t.minSleepHours))
         }
         if let steps = s.stepCount {
-            out.append(SignalStatus(systemImage: "figure.walk", label: "Steps",
+            out.append(SignalStatus(emoji: "🚶", label: "Steps",
                                     value: "\(steps)", isGood: steps >= 5000))
         }
         return out

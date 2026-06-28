@@ -15,8 +15,14 @@ extension ShapeStyle where Self == Color {
     static var manasMint: Color       { Color(red: 168/255, green: 230/255, blue: 207/255) }
     /// Warm Peach #ffb397 — empathy, warmth, approachability.
     static var manasPeach: Color      { Color(red: 255/255, green: 179/255, blue: 151/255) }
-    /// Cool Gray #f4f4f7 — clean neutral base.
-    static var manasBackground: Color { Color(red: 244/255, green: 244/255, blue: 247/255) }
+    /// App background #F2F2F7 (iOS systemGroupedBackground equivalent).
+    static var manasBackground: Color { Color(red: 242/255, green: 242/255, blue: 247/255) }
+
+    // Neutral text/separator tokens matching the prototype (light-mode only app).
+    static var manasInk: Color       { Color(red: 28/255,  green: 28/255,  blue: 30/255)  } // label / l1
+    static var manasL2: Color        { Color(red: 99/255,  green: 99/255,  blue: 102/255) } // secondary / l2
+    static var manasL3: Color        { Color(red: 174/255, green: 174/255, blue: 178/255) } // tertiary / l3
+    static var manasSeparator: Color { Color(red: 229/255, green: 229/255, blue: 234/255) } // sep
 }
 
 // MARK: - Risk Severity Colors

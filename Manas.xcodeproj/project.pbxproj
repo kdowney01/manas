@@ -16,6 +16,7 @@
 		4CBAD6090A9619A1F90A8375 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E192E2C1F9C3702132CCC9 /* SettingsView.swift */; };
 		4D5F991CF9810B5B77849D50 /* RiskScoringEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D9FD96E4B94928177DC242 /* RiskScoringEngine.swift */; };
 		58AEDD25490262123DECA685 /* WellbeingDetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51807B4B04FDA5FC45A9363C /* WellbeingDetailViews.swift */; };
+		67154524EEE10090EAD8FC8F /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0FBAC4B19490CB415BCC45 /* AppRouter.swift */; };
 		6796421E4E312B956D3D57EF /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99B45C4339441723D5C13BF9 /* Montserrat-Bold.ttf */; };
 		6B6546BA7CA97B37A247E33A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E313781DEB282C5579A40 /* DashboardView.swift */; };
 		72EC0C7E435964F5D05E8375 /* DeviceActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E90CA822DAA915C32E1B9CE /* DeviceActivityMonitor.swift */; };
@@ -79,6 +80,7 @@
 		A44E313781DEB282C5579A40 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A760E19199DFC9D49EA6AEBE /* manas_logo_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manas_logo_sm.png; sourceTree = "<group>"; };
 		B8A0D6794142043540B7E59A /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
+		CB0FBAC4B19490CB415BCC45 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		D3CED9ADC89676DBAB445947 /* Manas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Manas.entitlements; sourceTree = "<group>"; };
 		D68123675F7A3FD6C9712A07 /* Manas.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Manas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE7FD0AB87315CA4101C604F /* BiometricSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricSnapshot.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		2D320F8BA178437D92248C6B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				CB0FBAC4B19490CB415BCC45 /* AppRouter.swift */,
 				9DD9F42A5FFEC739EC8ACFF7 /* ManasApp.swift */,
 				686A520A1C8897C96DBF62E6 /* RootView.swift */,
 			);
@@ -418,6 +421,7 @@
 			files = (
 				17432B609A670A52D6078130 /* AlertManager.swift in Sources */,
 				E27F82229D9A9895D8006C05 /* AppConfig.swift in Sources */,
+				67154524EEE10090EAD8FC8F /* AppRouter.swift in Sources */,
 				AF8F2423C4941B90622E9308 /* BackendService.swift in Sources */,
 				D0843CAE4552E09919E5879C /* BiometricSnapshot.swift in Sources */,
 				A559E39E3625F914EE14E116 /* BrandColors.swift in Sources */,

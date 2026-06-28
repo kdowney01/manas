@@ -50,10 +50,10 @@ enum ScoreMethod: String, CaseIterable, Identifiable, Codable {
 }
 
 /// One signal's status within a domain, for the detail-screen tiles.
-/// Color is decided in the view; Core stays UI-free (SF Symbol name is just a string).
+/// Uses the prototype's emoji glyph; the tile's accent color is mapped in the view.
 struct SignalStatus: Identifiable {
     let id = UUID()
-    let systemImage: String
+    let emoji: String
     let label: String
     let value: String
     let isGood: Bool

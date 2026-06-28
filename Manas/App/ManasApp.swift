@@ -10,6 +10,7 @@ struct ManasApp: App {
     @StateObject private var deviceActivity     = DeviceActivityMonitor.shared
     @StateObject private var backend            = BackendService.shared
     @StateObject private var emotionAnalyzer    = FacialEmotionAnalyzer()
+    @StateObject private var router             = AppRouter()
 
     init() {
         applyBrandAppearance()
@@ -26,6 +27,7 @@ struct ManasApp: App {
                 .environmentObject(deviceActivity)
                 .environmentObject(backend)
                 .environmentObject(emotionAnalyzer)
+                .environmentObject(router)
                 .tint(.manasPrimary)
         }
     }
